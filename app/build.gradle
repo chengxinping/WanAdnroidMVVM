@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+
+android {
+    compileSdkVersion BuildVersions.compileSdkVersion
+    buildToolsVersion BuildVersions.build_tools
+
+    defaultConfig {
+        applicationId BuildVersions.application_id
+        minSdkVersion BuildVersions.minSdkVersion
+        targetSdkVersion BuildVersions.targetSdkVersion
+        versionCode BuildVersions.versionCode
+        versionName BuildVersions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dependencies.appcompat
+    implementation Dependencies.constraintLayout
+
+    implementation Dependencies.kotlinLibrary
+    implementation Dependencies.ktxCore
+
+    //koin
+    implementation Dependencies.koin_scop
+    implementation Dependencies.koin_viewmodel
+    implementation Dependencies.koin_ext
+
+    //retrofit
+    api Dependencies.retrofit
+    api Dependencies.retrofitGson
+    api Dependencies.okhttpLogging
+
+    testImplementation Dependencies.junit
+    androidTestImplementation Dependencies.android_junit
+    androidTestImplementation Dependencies.espresso
+
+    //module
+    implementation project(path: ':mvvm-core')
+}
