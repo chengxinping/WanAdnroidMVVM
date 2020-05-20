@@ -21,7 +21,7 @@ open class BaseViewModel : ViewModel() {
     val mStateLiveData = MutableLiveData<StateActionEvent>()
 
     /**
-     * @param api 网络请求方法体
+     * @param block 网络请求方法体
      * @param liveData 需要观察的数据体对象  不用包一层BaseApoResponse
      * @param isShowLoading 默认true 是否显示loading
      */
@@ -46,6 +46,41 @@ open class BaseViewModel : ViewModel() {
                 }
             }.onFailure {
                 mStateLiveData.postValue(ErrorState(it.message))
+            }
+        }
+    }
+
+
+    /**
+     * @param block 网络请求方法体
+     * @param success 成功请求回调
+     * @param error 失败请求回调 可以不传
+     * @param isShowLoading 默认true 是否显示loading
+     */
+    fun <T> launch(
+        block: suspend CoroutineScope.() -> BaseResponse<T>,
+        success: (T) -> Unit,
+        error: (String) -> Unit = {},
+        isShowLoading: Boolean = true
+    ) {
+        viewModelScope.launch {
+            //ktx扩展 代替try-catch
+            runCatching {
+                if (isShowLoading) mStateLiveData.postValue(LoadingState)
+                withContext(Dispatchers.IO) {
+                    block()
+                }
+            }.onSuccess {
+                if (it.isSuccess()) {
+                    mStateLiveData.postValue(SuccessState)
+                    success(it.getResponseData())
+                } else {
+                    mStateLiveData.postValue(ErrorState(it.getResponseMsg()))
+                    error(it.getResponseMsg())
+                }
+            }.onFailure {
+                mStateLiveData.postValue(ErrorState(it.message))
+                error(it.message.toString())
             }
         }
     }

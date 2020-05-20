@@ -1,7 +1,9 @@
 package cn.xpcheng.wanadnroidmvvm.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
+import cn.xpcheng.wanadnroidmvvm.App
 import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
 import cn.xpcheng.wanadnroidmvvm.repository.Main2Repository
 
@@ -14,6 +16,8 @@ class Main2ViewModel(private val mMainRepository: Main2Repository) : BaseViewMod
     var banners = MutableLiveData<ArrayList<Banner>>()
 
     fun getBanner() {
-        launch({ mMainRepository.getBanner() }, banners, true)
+        launch({ mMainRepository.getBanner() }, {
+            Toast.makeText(App.context, it.size.toString(), Toast.LENGTH_SHORT).show()
+        })
     }
 }
