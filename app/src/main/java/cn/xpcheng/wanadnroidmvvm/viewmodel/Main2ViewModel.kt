@@ -1,11 +1,16 @@
 package cn.xpcheng.wanadnroidmvvm.viewmodel
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
 import cn.xpcheng.wanadnroidmvvm.App
 import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
 import cn.xpcheng.wanadnroidmvvm.repository.Main2Repository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  *@author chengxinping

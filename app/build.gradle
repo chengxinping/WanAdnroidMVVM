@@ -33,6 +33,15 @@ android {
         experimental = true
     }
 
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
@@ -56,6 +65,8 @@ dependencies {
     testImplementation Dependencies.junit
     androidTestImplementation Dependencies.android_junit
     androidTestImplementation Dependencies.espresso
+
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     //module
     implementation project(path: ':mvvm-core')

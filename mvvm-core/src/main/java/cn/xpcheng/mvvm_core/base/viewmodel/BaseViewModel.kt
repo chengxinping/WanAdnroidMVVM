@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cn.xpcheng.mvvm_core.base.BaseResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 /**
  *
@@ -29,8 +26,8 @@ open class BaseViewModel : ViewModel() {
         block: suspend CoroutineScope.() -> BaseResponse<T>,
         liveData: MutableLiveData<T>,
         isShowLoading: Boolean = true
-    ) {
-        viewModelScope.launch {
+    ) :Job{
+       return viewModelScope.launch {
             //ktx扩展 代替try-catch
             runCatching {
                 if (isShowLoading) mStateLiveData.postValue(LoadingState)
@@ -38,6 +35,9 @@ open class BaseViewModel : ViewModel() {
                     block()
                 }
             }.onSuccess {
+
+                //可以再封装一下 将错误包装秤自定义异常
+
                 if (it.isSuccess()) {
                     mStateLiveData.postValue(SuccessState)
                     liveData.postValue(it.getResponseData())
@@ -62,8 +62,8 @@ open class BaseViewModel : ViewModel() {
         success: (T) -> Unit,
         error: (String) -> Unit = {},
         isShowLoading: Boolean = true
-    ) {
-        viewModelScope.launch {
+    ) :Job{
+      return  viewModelScope.launch {
             //ktx扩展 代替try-catch
             runCatching {
                 if (isShowLoading) mStateLiveData.postValue(LoadingState)
@@ -71,6 +71,8 @@ open class BaseViewModel : ViewModel() {
                     block()
                 }
             }.onSuccess {
+
+                //可以再封装一下 将错误包装秤自定义异常
                 if (it.isSuccess()) {
                     mStateLiveData.postValue(SuccessState)
                     success(it.getResponseData())
