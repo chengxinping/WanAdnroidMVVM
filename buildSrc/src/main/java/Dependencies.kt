@@ -1,17 +1,22 @@
 object Versions {
     const val kotlin = "1.3.72"
-    const val gradle_tools = "3.6.3"
+    const val gradle_tools = "4.0.1"
 
     const val appcompat = "1.1.0"
+    const val material = "1.1.0"
+    const val constraint="1.1.3"
 
     const val lifecycle = "2.2.0"
+    const val navigation = "2.3.0"
 
-    const val retrofit = "2.8.1"
-    const val okHttp = "4.7.0"
+    const val retrofit = "2.9.0"
+    const val okHttp = "4.8.0"
 
-    const val koin_version = "2.1.5"
+    const val koin_version = "2.1.6"
 
+    const val autosize = "1.2.1"
 
+    const val viewPager2 = "1.0.0"
 }
 
 object BuildVersions {
@@ -36,11 +41,14 @@ object Dependencies {
     const val ktxCore = "androidx.core:core-ktx:1.2.0"
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:1.1.3"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
+    const val material = "com.google.android.material:material:${Versions.material}"
 
     const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
+
+    const val navigation = "androidx.navigation:navigation-runtime:${Versions.navigation}"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
@@ -48,7 +56,11 @@ object Dependencies {
 
     const val koin_scop = "org.koin:koin-androidx-scope:${Versions.koin_version}"
     const val koin_viewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin_version}"
-    const val koin_ext="org.koin:koin-androidx-ext:${Versions.koin_version}"
+    const val koin_ext = "org.koin:koin-androidx-ext:${Versions.koin_version}"
+
+    const val autoSize = "me.jessyan:autosize:${Versions.autosize}"
+
+    const val viewPager2 = "androidx.viewpager2:viewpager2:${Versions.viewPager2}"
 
     const val junit = "junit:junit:4.12"
     const val espresso = "androidx.test.espresso:espresso-core:3.2.0"

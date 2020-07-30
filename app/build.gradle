@@ -48,9 +48,16 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.appcompat
     implementation Dependencies.constraintLayout
+    implementation Dependencies.material
+
+    implementation Dependencies.autoSize
+
+    implementation Dependencies.viewPager2
 
     implementation Dependencies.kotlinLibrary
     implementation Dependencies.ktxCore
+
+    implementation Dependencies.navigation
 
     //koin
     implementation Dependencies.koin_scop
@@ -66,7 +73,6 @@ dependencies {
     androidTestImplementation Dependencies.android_junit
     androidTestImplementation Dependencies.espresso
 
-    implementation "androidx.fragment:fragment-ktx:1.2.4"
 
     //module
     implementation project(path: ':mvvm-core')

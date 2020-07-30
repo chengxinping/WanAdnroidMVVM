@@ -38,6 +38,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isFirst = true
         initView()
         onVisible()
         initBaseViewModelAction()
@@ -73,7 +74,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     /**
      *初始化公共的数据监听 是否显示loading等
      */
-    protected fun initBaseViewModelAction() {
+    private fun initBaseViewModelAction() {
         getViewModel().let {
             it.mStateLiveData.observe(this, Observer { stateActionEvent ->
                 when (stateActionEvent) {

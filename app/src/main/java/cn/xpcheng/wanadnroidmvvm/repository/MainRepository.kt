@@ -11,5 +11,4 @@ import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApi
  */
 class MainRepository(private val wanAndroidApi: WanAndroidApi) {
 
-    suspend fun getBanner(): BaseApiResponse<ArrayList<Banner>> = wanAndroidApi.getBanner()
 }

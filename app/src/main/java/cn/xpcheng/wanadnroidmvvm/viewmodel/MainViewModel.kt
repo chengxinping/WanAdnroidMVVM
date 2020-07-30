@@ -12,9 +12,4 @@ import cn.xpcheng.wanadnroidmvvm.repository.MainRepository
  */
 class MainViewModel(private val mMainRepository: MainRepository) : BaseViewModel() {
 
-    var banners = MutableLiveData<ArrayList<Banner>>()
-
-    fun getBanner() {
-        launch({ mMainRepository.getBanner() }, banners, true)
-    }
 }
