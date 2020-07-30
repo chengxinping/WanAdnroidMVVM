@@ -1,1 +1,0 @@
-/Volumes/File/Projects/WanAdnroidMVVM/buildSrc/build/classes/kotlin/main/BuildPlugins.class:/Volumes/File/Projects/WanAdnroidMVVM/buildSrc/build/classes/kotlin/main/BuildVersions.class:/Volumes/File/Projects/WanAdnroidMVVM/buildSrc/build/classes/kotlin/main/Dependencies.class:/Volumes/File/Projects/WanAdnroidMVVM/buildSrc/build/classes/kotlin/main/Versions.class
