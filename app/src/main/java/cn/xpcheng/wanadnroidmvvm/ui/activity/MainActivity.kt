@@ -1,6 +1,7 @@
 package cn.xpcheng.wanadnroidmvvm.ui.activity
 
 import cn.xpcheng.mvvm_core.base.activity.BaseVmDbActivity
+import cn.xpcheng.mvvm_core.ext.parseStatusData
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.databinding.ActivityMainBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel

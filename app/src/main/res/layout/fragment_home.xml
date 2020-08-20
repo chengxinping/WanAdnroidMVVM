@@ -5,15 +5,14 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:gravity="center"
-            android:text="首页"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <include layout="@layout/layout_toolbar" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include layout="@layout/layout_recycler_view" />
+
+    </LinearLayout>
 </layout>

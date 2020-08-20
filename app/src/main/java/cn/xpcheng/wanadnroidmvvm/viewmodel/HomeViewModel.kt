@@ -1,6 +1,12 @@
 package cn.xpcheng.wanadnroidmvvm.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
+import cn.xpcheng.mvvm_core.base.viewmodel.ResultState
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
+import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
+import cn.xpcheng.wanadnroidmvvm.repository.HomeRepository
 
 /**
  *@author chengxinping
@@ -8,6 +14,17 @@ import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
  *@desc
  */
 
-class HomeViewModel : BaseViewModel() {
+class HomeViewModel(private val mHomeRepository: HomeRepository) : BaseViewModel() {
+    var homeArticles = MutableLiveData<ArticleBody>()
+
+    var bannerData = MutableLiveData<ArrayList<Banner>>()
+
+    fun getHomeData(page: Int) {
+        launch({ mHomeRepository.getHomeData(page) }, homeArticles, true)
+    }
+
+    fun getBanner() {
+        launch({ mHomeRepository.getBanner() }, bannerData, true)
+    }
 
 }

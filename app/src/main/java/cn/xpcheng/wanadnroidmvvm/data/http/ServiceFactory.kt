@@ -38,7 +38,7 @@ val okHttpClient = OkHttpClient.Builder()
 val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .client(okHttpClient)
-    .baseUrl("http://www.wanandroid.com/")
+    .baseUrl("https://www.wanandroid.com/")
     .build()
 
 //接口代理给koin注入

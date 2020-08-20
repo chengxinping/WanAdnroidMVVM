@@ -18,6 +18,7 @@ open class BaseViewModel : ViewModel() {
     val mStateLiveData = MutableLiveData<StateActionEvent>()
 
     /**
+     * 通用处理loading error的网络请求
      * @param block 网络请求方法体
      * @param liveData 需要观察的数据体对象  不用包一层BaseApoResponse
      * @param isShowLoading 默认true 是否显示loading
@@ -25,9 +26,9 @@ open class BaseViewModel : ViewModel() {
     fun <T> launch(
         block: suspend CoroutineScope.() -> BaseResponse<T>,
         liveData: MutableLiveData<T>,
-        isShowLoading: Boolean = true
-    ) :Job{
-       return viewModelScope.launch {
+        isShowLoading: Boolean = false
+    ): Job {
+        return viewModelScope.launch {
             //ktx扩展 代替try-catch
             runCatching {
                 if (isShowLoading) mStateLiveData.postValue(LoadingState)
@@ -52,6 +53,36 @@ open class BaseViewModel : ViewModel() {
 
 
     /**
+     * 特殊处理的网络请求  error处理不用界面的通用error处理  需要配合parseStatusData一起用
+     * @param block 网络请求方法体
+     * @param liveData 需要观察的数据体对象  不用包一层BaseApoResponse
+     * @param isShowLoading 默认true 是否显示loading
+     */
+    fun <T> request(
+        block: suspend CoroutineScope.() -> BaseResponse<T>,
+        liveData: MutableLiveData<ResultState<T>>,
+        isShowLoading: Boolean = false
+    ): Job {
+        return viewModelScope.launch {
+            runCatching {
+                if (isShowLoading) liveData.postValue(ResultState.onAppLoading())
+                withContext(Dispatchers.IO) {
+                    block()
+                }
+            }.onSuccess {
+                if (it.isSuccess())
+                    liveData.postValue(ResultState.onAppSuccess(it.getResponseData()))
+                else
+                    liveData.postValue(ResultState.onAppError(it.getResponseMsg()))
+            }.onFailure {
+                liveData.postValue(ResultState.onAppError(it.message))
+            }
+        }
+    }
+
+
+    /**
+     *在viewmodel 里面处理的成功失败
      * @param block 网络请求方法体
      * @param success 成功请求回调
      * @param error 失败请求回调 可以不传
@@ -62,8 +93,8 @@ open class BaseViewModel : ViewModel() {
         success: (T) -> Unit,
         error: (String) -> Unit = {},
         isShowLoading: Boolean = true
-    ) :Job{
-      return  viewModelScope.launch {
+    ): Job {
+        return viewModelScope.launch {
             //ktx扩展 代替try-catch
             runCatching {
                 if (isShowLoading) mStateLiveData.postValue(LoadingState)

@@ -44,11 +44,6 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         initBaseViewModelAction()
     }
 
-    /**
-     * 创建liveData监听（网络成功回调）
-     */
-    abstract fun createObserver()
-
 
     override fun onResume() {
         super.onResume()
@@ -66,10 +61,18 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         }
     }
 
+    abstract fun initView()
+
     /**
      * 懒加载数据
      */
     abstract fun lazyLoadData()
+
+
+    /**
+     * 创建liveData监听（网络成功回调）
+     */
+    abstract fun createObserver()
 
     /**
      *初始化公共的数据监听 是否显示loading等
@@ -91,7 +94,6 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         }
     }
 
-    abstract fun initView()
 
     open fun showLoading() {}
 

@@ -46,16 +46,20 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //android ui
     implementation Dependencies.appcompat
+    implementation Dependencies.supportV4
     implementation Dependencies.constraintLayout
     implementation Dependencies.material
-
-    implementation Dependencies.autoSize
-
+    implementation Dependencies.swipeRefresh
     implementation Dependencies.viewPager2
 
     implementation Dependencies.kotlinLibrary
     implementation Dependencies.ktxCore
+
+
+    implementation Dependencies.autoSize
+
 
     implementation Dependencies.navigation
 
@@ -72,6 +76,15 @@ dependencies {
     testImplementation Dependencies.junit
     androidTestImplementation Dependencies.android_junit
     androidTestImplementation Dependencies.espresso
+
+    //第三方库
+    implementation Dependencies.brvah
+    implementation Dependencies.banner
+
+    implementation Dependencies.uiStatus
+
+    //图片加载
+    implementation Dependencies.coil
 
 
     //module

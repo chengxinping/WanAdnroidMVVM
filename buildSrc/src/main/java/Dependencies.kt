@@ -4,7 +4,8 @@ object Versions {
 
     const val appcompat = "1.1.0"
     const val material = "1.1.0"
-    const val constraint="1.1.3"
+    const val constraint = "1.1.3"
+    const val swipeRefresh = "1.1.0"
 
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.0"
@@ -17,6 +18,14 @@ object Versions {
     const val autosize = "1.2.1"
 
     const val viewPager2 = "1.0.0"
+
+    const val banner = "3.0.0@aar"
+
+    const val brvah = "3.0.4"
+
+    const val uiStatus = "1.0.5"
+
+    const val coil = "0.12.0"
 }
 
 object BuildVersions {
@@ -41,8 +50,11 @@ object Dependencies {
     const val ktxCore = "androidx.core:core-ktx:1.2.0"
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
+    const val supportV4 = "androidx.legacy:legacy-support-v4:1.0.0"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
     const val material = "com.google.android.material:material:${Versions.material}"
+    const val swipeRefresh =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefresh}"
 
     const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
@@ -66,4 +78,15 @@ object Dependencies {
     const val espresso = "androidx.test.espresso:espresso-core:3.2.0"
     const val android_junit = "androidx.test.ext:junit:1.1.1"
 
+
+    //banner
+    const val banner = "cn.bingoogolapple:bga-banner:${Versions.banner}"
+
+    //adapter
+    const val brvah = "com.github.CymChad:BaseRecyclerViewAdapterHelper:${Versions.brvah}"
+
+    const val uiStatus = "com.github.FengChenSunshine:UiStatus:${Versions.uiStatus}"
+
+    //图片加载框架
+    const val coil = "io.coil-kt:coil:${Versions.coil}"
 }

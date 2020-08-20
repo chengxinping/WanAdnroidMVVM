@@ -17,13 +17,6 @@ class HeaderInterceptor : Interceptor {
         val request = chain.request()
         val builder = request.newBuilder()
         builder.addHeader("Content-type", "application/json; charset=utf-8")
-        builder.addHeader(
-            "User-Agent",
-            Ktx.app.getString(R.string.app_name) + "/" + " V" + Ktx.app.packageManager.getPackageInfo(
-                Ktx.app.packageName,
-                0
-            ).versionName + "(" + Build.MODEL + ";" + Build.VERSION.RELEASE + ")"
-        )
 
         //TODO: 部分接口需要将缓存的cookie添加到header  目前是全部加到header
 
