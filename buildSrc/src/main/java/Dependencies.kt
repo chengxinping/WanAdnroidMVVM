@@ -26,6 +26,8 @@ object Versions {
     const val uiStatus = "1.0.5"
 
     const val coil = "0.12.0"
+
+    const val agentWeb = "4.1.4"
 }
 
 object BuildVersions {
@@ -89,4 +91,6 @@ object Dependencies {
 
     //图片加载框架
     const val coil = "io.coil-kt:coil:${Versions.coil}"
+
+    const val agentWeb = "com.just.agentweb:agentweb:${Versions.agentWeb}"
 }

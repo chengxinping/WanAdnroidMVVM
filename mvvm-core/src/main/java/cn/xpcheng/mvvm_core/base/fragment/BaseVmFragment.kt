@@ -1,9 +1,11 @@
 package cn.xpcheng.mvvm_core.base.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -27,6 +29,8 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     abstract fun getViewModel(): VM
 
+    lateinit var mActivity: AppCompatActivity
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +52,11 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     override fun onResume() {
         super.onResume()
         onVisible()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = context as AppCompatActivity
     }
 
     /**

@@ -20,6 +20,7 @@ val viewModelModule = module {
     viewModel { SquareViewModel() }
     viewModel { WechatViewModel() }
     viewModel { MineViewModel() }
+    viewModel { WebViewViewModel() }
 }
 
 val responseModule = module {

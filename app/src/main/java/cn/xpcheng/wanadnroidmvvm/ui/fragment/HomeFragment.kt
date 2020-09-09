@@ -1,28 +1,28 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import android.content.Context
-import android.util.Log
-import android.view.LayoutInflater
+import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.fragment.BaseVmDbFragment
-import cn.xpcheng.mvvm_core.ext.parseStatusData
 import cn.xpcheng.wanadnroidmvvm.R
+import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.WebViewData
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentHomeBinding
-import cn.xpcheng.wanadnroidmvvm.databinding.LayoutBannerBindingImpl
+import cn.xpcheng.wanadnroidmvvm.ext.init
+import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.navigation.NavHostFragment
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.HomeViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import coil.load
 import kotlinx.android.synthetic.main.layout_banner.view.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
+import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -60,17 +60,27 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun getViewModel(): HomeViewModel = mViewModel
 
     override fun initView() {
-
-        recycler.run {
-            layoutManager = mLinearLayoutManager
-            itemAnimator = DefaultItemAnimator()
-            adapter = mAdapter
+        toolbar.init("首页")
+        recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
         mAdapter.run {
             addHeaderView(bannerView)
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.getHomeData(page)
+            }
+            setOnItemClickListener { _, _, position ->
+
+                nav(R.id.action_global_webViewFragment, Bundle().apply {
+                    putParcelable(
+                        Constant.KEY_WEB_VIEW_DATA, WebViewData(
+                            mData[position].id,
+                            mData[position].link,
+                            mData[position].title,
+                            mData[position].collect
+                        )
+                    )
+                })
             }
         }
         swipe_refresh.run {
@@ -109,7 +119,7 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
             }
 
             mAdapter.loadMoreModule.run {
-                if (it.datas.size < it.size)
+                if (it.over)
                     loadMoreEnd()
                 else
                     loadMoreComplete()
@@ -133,6 +143,18 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
                         crossfade(true)
 
                     }
+                }
+                setDelegate { _, _, _, position ->
+                    nav(R.id.action_global_webViewFragment, Bundle().apply {
+                        putParcelable(
+                            Constant.KEY_WEB_VIEW_DATA, WebViewData(
+                                it[position].id,
+                                it[position].url,
+                                it[position].title,
+                                false
+                            )
+                        )
+                    })
                 }
             }
 

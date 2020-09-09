@@ -2,6 +2,7 @@ package cn.xpcheng.wanadnroidmvvm.data.http
 
 import android.util.Log
 import cn.xpcheng.wanadnroidmvvm.App
+import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.http.interceptor.CacheInterceptor
 import cn.xpcheng.wanadnroidmvvm.data.http.interceptor.HeaderInterceptor
 import okhttp3.Cache
@@ -9,6 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.Console
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -38,7 +40,7 @@ val okHttpClient = OkHttpClient.Builder()
 val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .client(okHttpClient)
-    .baseUrl("https://www.wanandroid.com/")
+    .baseUrl(Constant.BASE_URL)
     .build()
 
 //接口代理给koin注入

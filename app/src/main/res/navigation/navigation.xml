@@ -8,4 +8,16 @@
         android:id="@+id/mainFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.MainFragment"
         android:label="首页"></fragment>
+
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.WebViewFragment"
+        android:label="详情"></fragment>
+    <action
+        android:id="@+id/action_global_webViewFragment"
+        app:destination="@id/webViewFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 </navigation>
