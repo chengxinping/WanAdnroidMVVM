@@ -60,7 +60,16 @@ class HomeFragment : BaseVmDbFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun getViewModel(): HomeViewModel = mViewModel
 
     override fun initView() {
-        toolbar.init("首页")
+        toolbar.init("首页").run {
+            inflateMenu(R.menu.home_search)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_search -> nav(R.id.action_mainFragment_to_searchFragment)
+                }
+
+                true
+            }
+        }
         recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }

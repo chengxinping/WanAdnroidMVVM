@@ -7,12 +7,25 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.MainFragment"
-        android:label="首页"></fragment>
+        android:label="首页">
+        <action
+            android:id="@+id/action_mainFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/webViewFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.WebViewFragment"
         android:label="详情"></fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment"
+        android:label="搜索"></fragment>
     <action
         android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"

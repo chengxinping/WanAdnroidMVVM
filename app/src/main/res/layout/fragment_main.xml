@@ -26,6 +26,6 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:background="?android:attr/windowBackground"
-            app:menu="@menu/navigation" />
+            app:menu="@menu/home_bottom_navigation" />
     </LinearLayout>
 </layout>

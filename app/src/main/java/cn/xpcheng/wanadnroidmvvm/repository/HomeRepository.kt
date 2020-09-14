@@ -1,6 +1,5 @@
 package cn.xpcheng.wanadnroidmvvm.repository
 
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
 import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
 import cn.xpcheng.wanadnroidmvvm.data.bean.BaseApiResponse

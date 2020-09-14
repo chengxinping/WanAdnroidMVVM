@@ -2,6 +2,7 @@ package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import android.text.Html
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import cn.xpcheng.mvvm_core.base.fragment.BaseVmDbFragment
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.constant.Constant
@@ -44,11 +45,18 @@ class WebViewFragment : BaseVmDbFragment<WebViewViewModel, FragmentWebviewBindin
         toolbar.run {
             mActivity.setSupportActionBar(this)
             title = Html.fromHtml(mViewModel.title)
-            setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+            setNavigationIcon(R.drawable.ic_arrow_back)
             setNavigationOnClickListener {
                 onBack()
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    onBack()
+                }
+            })
 
         preWeb = AgentWeb.with(this)
             .setAgentWebParent(webview_container, LinearLayout.LayoutParams(-1, -1))
