@@ -67,5 +67,6 @@
     <color name="arrow_color">@color/Grey700</color>
     <color name="sticky_header_bg">@color/Grey300</color>
     <color name="high_level_text_color">#333333</color>
+    <color name="middle_level_text_color">#666666</color>
 
 </resources>

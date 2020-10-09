@@ -2,8 +2,8 @@ package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import cn.xpcheng.mvvm_core.base.fragment.BaseVmDbFragment
 import cn.xpcheng.wanadnroidmvvm.R
+import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentMainBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *@time 2020/7/29
  *@desc
  */
-class MainFragment : BaseVmDbFragment<MainViewModel, FragmentMainBinding>() {
+class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
     private val mViewModel: MainViewModel by viewModel()
 

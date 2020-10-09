@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="cn.xpcheng.common.utils.ColorUtil" />
+
+        <variable
+            name="hotKey"
+            type="cn.xpcheng.wanadnroidmvvm.data.bean.HotKey" />
+    </data>
+
+    <TextView
+        android:id="@+id/tv_flow"
+        drawable_shapeMode="@{0}"
+        drawable_solidColor="@{@color/Grey100}"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:foreground="?selectableItemBackground"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="6dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="6dp"
+        android:text="@{hotKey.name}"
+        android:textColor="@{ColorUtil.INSTANCE.randomColor()}"
+        android:textSize="15sp">
+
+    </TextView>
+</layout>

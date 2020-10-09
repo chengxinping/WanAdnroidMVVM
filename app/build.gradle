@@ -53,6 +53,7 @@ dependencies {
     implementation Dependencies.material
     implementation Dependencies.swipeRefresh
     implementation Dependencies.viewPager2
+    implementation Dependencies.flexBoxLayoutManager
 
     implementation Dependencies.kotlinLibrary
     implementation Dependencies.ktxCore
@@ -62,6 +63,11 @@ dependencies {
 
 
     implementation Dependencies.navigation
+
+    //room
+    implementation Dependencies.room
+    kapt Dependencies.roomCompiler
+    implementation Dependencies.roomKtx
 
     //koin
     implementation Dependencies.koin_scop
@@ -87,6 +93,8 @@ dependencies {
     implementation Dependencies.coil
 
     implementation Dependencies.agentWeb
+
+    implementation Dependencies.noDrawable
 
 
     //module

@@ -44,8 +44,10 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
         initView()
+        createObserver()
         onVisible()
         initBaseViewModelAction()
+        initData()
     }
 
 
@@ -66,11 +68,19 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
             lazyLoadData()
             isFirst = false
-            createObserver()
+            //在Fragment中，只有懒加载过了才能开启网络变化监听
+            //TODO 全局网络监听
         }
     }
 
     abstract fun initView()
+
+
+    /**
+     * Fragment执行onCreate后触发的方法
+     */
+    open fun initData() {}
+
 
     /**
      * 懒加载数据

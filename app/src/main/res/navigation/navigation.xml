@@ -25,7 +25,21 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment"
-        android:label="搜索"></fragment>
+        android:label="搜索">
+
+        <action
+            android:id="@+id/action_searchFragment_to_searchDetailFragment"
+            app:destination="@id/searchDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchDetailFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchDetailFragment"
+        android:label="搜索详情"></fragment>
     <action
         android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"

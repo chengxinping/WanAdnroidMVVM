@@ -1,11 +1,7 @@
 package cn.xpcheng.wanadnroidmvvm.data.http
 
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
-import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
-import cn.xpcheng.wanadnroidmvvm.data.bean.BaseApiResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
+import cn.xpcheng.wanadnroidmvvm.data.bean.*
+import retrofit2.http.*
 
 /**
  *@author chengxinping
@@ -31,4 +27,18 @@ interface WanAndroidApi {
      */
     @GET("article/list/{page}/json")
     suspend fun getArticlesList(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+
+    /**
+     * 搜索
+     * 页码，拼接在连接中，从0开始。
+     */
+    @POST("article/query/{page}/json")
+    @FormUrlEncoded
+    suspend fun search(
+        @Path("page") page: Int,
+        @Field("k") key: String
+    ): BaseApiResponse<ArticleBody>
+
+    @GET("hotkey/json")
+    suspend fun getHotKeys(): BaseApiResponse<ArrayList<HotKey>>
 }

@@ -3,11 +3,12 @@ package cn.xpcheng.wanadnroidmvvm.ui.fragment
 import android.text.Html
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
-import cn.xpcheng.mvvm_core.base.fragment.BaseVmDbFragment
 import cn.xpcheng.wanadnroidmvvm.R
+import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.bean.WebViewData
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentWebviewBindingImpl
+import cn.xpcheng.wanadnroidmvvm.ext.initClose
 import cn.xpcheng.wanadnroidmvvm.ext.navigateBack
 import cn.xpcheng.wanadnroidmvvm.viewmodel.WebViewViewModel
 import com.just.agentweb.AgentWeb
@@ -21,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *@desc
  */
 
-class WebViewFragment : BaseVmDbFragment<WebViewViewModel, FragmentWebviewBindingImpl>() {
+class WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBindingImpl>() {
     override fun getLayoutId(): Int = R.layout.fragment_webview
 
     private val mViewModel: WebViewViewModel by viewModel()
@@ -34,22 +35,6 @@ class WebViewFragment : BaseVmDbFragment<WebViewViewModel, FragmentWebviewBindin
     override fun initView() {
         setHasOptionsMenu(true)
 
-        arguments?.run {
-            getParcelable<WebViewData>(Constant.KEY_WEB_VIEW_DATA)?.let {
-                mViewModel.id = it.id
-                mViewModel.isCollect = it.isCollect
-                mViewModel.title = it.title
-                mViewModel.url = it.url
-            }
-        }
-        toolbar.run {
-            mActivity.setSupportActionBar(this)
-            title = Html.fromHtml(mViewModel.title)
-            setNavigationIcon(R.drawable.ic_arrow_back)
-            setNavigationOnClickListener {
-                onBack()
-            }
-        }
 
         requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
@@ -63,6 +48,23 @@ class WebViewFragment : BaseVmDbFragment<WebViewViewModel, FragmentWebviewBindin
             .useDefaultIndicator()
             .createAgentWeb()
             .ready()
+    }
+
+    override fun initData() {
+        super.initData()
+        arguments?.run {
+            getParcelable<WebViewData>(Constant.KEY_WEB_VIEW_DATA)?.let {
+                mViewModel.id = it.id
+                mViewModel.isCollect = it.isCollect
+                mViewModel.title = it.title
+                mViewModel.url = it.url
+            }
+        }
+
+        toolbar.run {
+            mActivity.setSupportActionBar(this)
+            initClose(Html.fromHtml(mViewModel.title).toString(), onBack = { onBack() })
+        }
     }
 
     private fun onBack() {

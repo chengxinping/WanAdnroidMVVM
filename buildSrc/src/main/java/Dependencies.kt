@@ -9,6 +9,7 @@ object Versions {
 
     const val lifecycle = "2.2.0"
     const val navigation = "2.3.0"
+    const val room = "2.2.5"
 
     const val retrofit = "2.9.0"
     const val okHttp = "4.8.0"
@@ -28,6 +29,10 @@ object Versions {
     const val coil = "0.12.0"
 
     const val agentWeb = "4.1.4"
+
+    const val flexBoxLayoutManager = "2.0.1"
+
+    const val noDrawable = "1.1.1"
 }
 
 object BuildVersions {
@@ -57,12 +62,17 @@ object Dependencies {
     const val material = "com.google.android.material:material:${Versions.material}"
     const val swipeRefresh =
         "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefresh}"
+    const val flexBoxLayoutManager = "com.google.android:flexbox:${Versions.flexBoxLayoutManager}"
 
     const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 
     const val navigation = "androidx.navigation:navigation-runtime:${Versions.navigation}"
+
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
@@ -93,4 +103,6 @@ object Dependencies {
     const val coil = "io.coil-kt:coil:${Versions.coil}"
 
     const val agentWeb = "com.just.agentweb:agentweb:${Versions.agentWeb}"
+
+    const val noDrawable = "com.github.whataa:noDrawable:${Versions.noDrawable}"
 }

@@ -35,11 +35,14 @@
 
             <TextView
                 android:id="@+id/tv_item_top"
+                drawable_radius="@{2}"
+                drawable_shapeMode="@{0}"
+                drawable_strokeColor="@{@color/deep_red}"
+                drawable_strokeWidth="@{0.5f}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/bg_deep_red_stroke"
                 android:paddingLeft="5dp"
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
@@ -53,10 +56,13 @@
 
             <TextView
                 android:id="@+id/tv_item_new"
+                drawable_radius="@{2}"
+                drawable_shapeMode="@{0}"
+                drawable_strokeColor="@{@color/Red}"
+                drawable_strokeWidth="@{0.5f}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:background="@drawable/bg_red_stroke"
                 android:paddingLeft="5dp"
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
@@ -70,10 +76,13 @@
 
             <TextView
                 android:id="@+id/tv_item_tag"
+                drawable_radius="@{2}"
+                drawable_shapeMode="@{0}"
+                drawable_strokeColor="@{@color/colorAccent}"
+                drawable_strokeWidth="@{0.5f}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:background="@drawable/bg_accent_stroke"
                 android:paddingLeft="5dp"
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
