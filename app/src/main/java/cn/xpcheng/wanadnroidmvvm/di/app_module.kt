@@ -3,9 +3,7 @@ package cn.xpcheng.wanadnroidmvvm.di
 import cn.xpcheng.wanadnroidmvvm.data.db.searchHistoryDao
 import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApi
 import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApiService
-import cn.xpcheng.wanadnroidmvvm.repository.HomeRepository
-import cn.xpcheng.wanadnroidmvvm.repository.SearchDetailRepository
-import cn.xpcheng.wanadnroidmvvm.repository.SearchRepository
+import cn.xpcheng.wanadnroidmvvm.repository.*
 import cn.xpcheng.wanadnroidmvvm.viewmodel.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -21,11 +19,12 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { ProjectViewModel() }
     viewModel { SquareViewModel() }
-    viewModel { WechatViewModel() }
+    viewModel { WxViewModel(get()) }
     viewModel { MineViewModel() }
     viewModel { WebViewViewModel() }
     viewModel { SearchViewModel(get()) }
     viewModel { SearchDetailViewModel(get()) }
+    viewModel { WxChildViewModel(get()) }
 }
 
 val responseModule = module {
@@ -33,6 +32,8 @@ val responseModule = module {
     factory { HomeRepository(get()) }
     factory { SearchRepository(get(), get()) }
     factory { SearchDetailRepository(get()) }
+    factory { WxRepository(get()) }
+    factory { WxChildRepository(get()) }
 }
 
 val apiModule = module {

@@ -13,7 +13,7 @@ import cn.xpcheng.wanadnroidmvvm.repository.SearchRepository
  *@desc
  */
 class SearchViewModel(private val searchRepository: SearchRepository) : BaseViewModel() {
-    var hotKeys = MutableLiveData<ArrayList<HotKey>>()
+    var hotKeys = MutableLiveData<List<HotKey>>()
 
     var historyKeys = MutableLiveData<MutableList<SearchHistoryKey>>()
 

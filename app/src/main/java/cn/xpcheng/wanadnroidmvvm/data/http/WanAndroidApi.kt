@@ -40,5 +40,21 @@ interface WanAndroidApi {
     ): BaseApiResponse<ArticleBody>
 
     @GET("hotkey/json")
-    suspend fun getHotKeys(): BaseApiResponse<ArrayList<HotKey>>
+    suspend fun getHotKeys(): BaseApiResponse<List<HotKey>>
+
+    /**
+     * 获取微信公众号分类
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getWxTree(): BaseApiResponse<List<TreeBean>>
+
+    /**
+     * 查看某个公众号历史数据
+     * 分页从1开始
+     */
+    @GET("wxarticle/list/{cid}/{page}/json")
+    suspend fun getWxArticle(
+        @Path("cid") cid: Int,
+        @Path("page") page: Int
+    ): BaseApiResponse<ArticleBody>
 }

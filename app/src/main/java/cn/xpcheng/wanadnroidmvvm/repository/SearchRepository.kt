@@ -17,7 +17,7 @@ class SearchRepository(
     private val wanAndroidApi: WanAndroidApi,
     private val searchHistoryDao: SearchHistoryDao
 ) {
-    suspend fun getHotKey(): BaseApiResponse<ArrayList<HotKey>> = wanAndroidApi.getHotKeys()
+    suspend fun getHotKey(): BaseApiResponse<List<HotKey>> = wanAndroidApi.getHotKeys()
 
     //获取搜索历史
     suspend fun getHistorySearchKey(): MutableList<SearchHistoryKey> = searchHistoryDao.searchAll()

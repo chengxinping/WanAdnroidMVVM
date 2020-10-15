@@ -49,7 +49,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                 override fun createFragment(position: Int): Fragment {
                     return when (position) {
                         0 -> HomeFragment()
-                        1 -> WechatFragment()
+                        1 -> WxFragment()
                         2 -> SquareFragment()
                         3 -> ProjectFragment()
                         4 -> MineFragment()

@@ -66,10 +66,14 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
      */
     private fun onVisible() {
         if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
-            lazyLoadData()
-            isFirst = false
-            //在Fragment中，只有懒加载过了才能开启网络变化监听
-            //TODO 全局网络监听
+            view?.postDelayed({
+
+                lazyLoadData()
+                isFirst = false
+                //在Fragment中，只有懒加载过了才能开启网络变化监听
+                //TODO 全局网络监听
+
+            }, 120)
         }
     }
 

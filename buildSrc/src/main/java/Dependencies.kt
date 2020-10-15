@@ -1,6 +1,6 @@
 object Versions {
     const val kotlin = "1.3.72"
-    const val gradle_tools = "4.0.1"
+    const val gradle_tools = "4.1.0"
 
     const val appcompat = "1.1.0"
     const val material = "1.1.0"
