@@ -24,9 +24,8 @@ object Versions {
 
     const val brvah = "3.0.4"
 
-    const val uiStatus = "1.0.5"
 
-    const val coil = "0.12.0"
+    const val coil = "1.0.0-rc3"
 
     const val agentWeb = "4.1.4"
 
@@ -97,7 +96,6 @@ object Dependencies {
     //adapter
     const val brvah = "com.github.CymChad:BaseRecyclerViewAdapterHelper:${Versions.brvah}"
 
-    const val uiStatus = "com.github.FengChenSunshine:UiStatus:${Versions.uiStatus}"
 
     //图片加载框架
     const val coil = "io.coil-kt:coil:${Versions.coil}"

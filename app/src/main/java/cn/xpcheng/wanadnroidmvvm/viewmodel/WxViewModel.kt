@@ -14,6 +14,6 @@ class WxViewModel(private val wxRepository: WxRepository) : BaseViewModel() {
     var wxTree = MutableLiveData<List<TreeBean>>()
 
     fun getWxTree() {
-        launch({ wxRepository.getWxtTree() }, wxTree, true)
+        launch({ wxRepository.getWxtTree() }, wxTree, false)
     }
 }

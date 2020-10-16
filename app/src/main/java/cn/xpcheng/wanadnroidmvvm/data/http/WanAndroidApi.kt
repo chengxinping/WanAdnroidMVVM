@@ -57,4 +57,29 @@ interface WanAndroidApi {
         @Path("cid") cid: Int,
         @Path("page") page: Int
     ): BaseApiResponse<ArticleBody>
+
+    /**
+     *项目分类
+     */
+    @GET("project/tree/json")
+    suspend fun getProjectTree(): BaseApiResponse<ArrayList<TreeBean>>
+
+    /**
+     * 获取某个项目分类下全部数据
+     * @param page 分页数据  从1开始
+     * @param cid 项目分类id
+     */
+    @GET("project/list/{page}/json")
+    suspend fun getProjectArticle(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): BaseApiResponse<ArticleBody>
+
+    /**
+     * 最新项目
+     * @param page 分页数据 从0开始
+     */
+    @GET("article/listproject/{page}/json")
+    suspend fun getRecentlyProjects(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+
 }

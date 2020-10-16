@@ -87,8 +87,6 @@ dependencies {
     implementation Dependencies.brvah
     implementation Dependencies.banner
 
-    implementation Dependencies.uiStatus
-
     //图片加载
     implementation Dependencies.coil
 

@@ -2,8 +2,6 @@ package cn.xpcheng.wanadnroidmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
-import cn.xpcheng.mvvm_core.base.viewmodel.ResultState
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
 import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
 import cn.xpcheng.wanadnroidmvvm.repository.HomeRepository

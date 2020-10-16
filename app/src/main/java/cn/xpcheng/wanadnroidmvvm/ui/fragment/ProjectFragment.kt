@@ -1,9 +1,14 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.databinding.FragmentProjectBinding
+import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.ProjectViewModel
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.layout_tablayout.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -11,10 +16,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *@time 2020/7/30
  *@desc
  */
-class ProjectFragment : BaseFragment<ProjectViewModel, FragmentProjectBinding>() {
+class ProjectFragment : BaseFragment<ProjectViewModel, LayoutTablayoutBinding>() {
     private val mViewModel: ProjectViewModel by viewModel()
 
-    override fun getLayoutId(): Int = R.layout.fragment_project
+    override fun getLayoutId(): Int = R.layout.layout_tablayout
 
     override fun getViewModel(): ProjectViewModel = mViewModel
 
@@ -23,10 +28,30 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentProjectBinding>()
     }
 
     override fun createObserver() {
+        mViewModel.projectTree.observe(viewLifecycleOwner, Observer {
+            view_pager.run {
+                offscreenPageLimit = it.size
 
+                adapter = object : FragmentStateAdapter(this@ProjectFragment) {
+                    override fun getItemCount(): Int = it.size
+
+                    override fun createFragment(position: Int): Fragment {
+                        return ProjectChildFragment.newInstance(it[position].id)
+                    }
+
+                }
+            }
+
+            TabLayoutMediator(
+                tab_layout,
+                view_pager
+            ) { tab, position ->
+                tab.text = it[position].name
+            }.attach();
+        })
     }
 
     override fun lazyLoadData() {
-
+        mViewModel.getProjectTree()
     }
 }

@@ -83,21 +83,19 @@ open class BaseViewModel : ViewModel() {
 
     /**
      *在viewmodel 里面处理的成功失败
+     * 需要自己控制 loading
      * @param block 网络请求方法体
      * @param success 成功请求回调
      * @param error 失败请求回调 可以不传
-     * @param isShowLoading 默认true 是否显示loading
      */
     fun <T> launch(
         block: suspend CoroutineScope.() -> BaseResponse<T>,
         success: (T) -> Unit,
-        error: (String) -> Unit = {},
-        isShowLoading: Boolean = true
+        error: (String) -> Unit = {}
     ): Job {
         return viewModelScope.launch {
             //ktx扩展 代替try-catch
             runCatching {
-                if (isShowLoading) mStateLiveData.postValue(LoadingState)
                 withContext(Dispatchers.IO) {
                     block()
                 }
@@ -105,14 +103,11 @@ open class BaseViewModel : ViewModel() {
 
                 //可以再封装一下 将错误包装秤自定义异常
                 if (it.isSuccess()) {
-                    mStateLiveData.postValue(SuccessState)
                     success(it.getResponseData())
                 } else {
-                    mStateLiveData.postValue(ErrorState(it.getResponseMsg()))
                     error(it.getResponseMsg())
                 }
             }.onFailure {
-                mStateLiveData.postValue(ErrorState(it.message))
                 error(it.message.toString())
             }
         }

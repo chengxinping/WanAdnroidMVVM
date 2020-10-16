@@ -17,7 +17,7 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get()) }
-    viewModel { ProjectViewModel() }
+    viewModel { ProjectViewModel(get()) }
     viewModel { SquareViewModel() }
     viewModel { WxViewModel(get()) }
     viewModel { MineViewModel() }
@@ -25,6 +25,7 @@ val viewModelModule = module {
     viewModel { SearchViewModel(get()) }
     viewModel { SearchDetailViewModel(get()) }
     viewModel { WxChildViewModel(get()) }
+    viewModel { ProjectChildViewModel(get()) }
 }
 
 val responseModule = module {
@@ -34,6 +35,8 @@ val responseModule = module {
     factory { SearchDetailRepository(get()) }
     factory { WxRepository(get()) }
     factory { WxChildRepository(get()) }
+    factory { ProjectRepository(get()) }
+    factory { ProjectChildRepository(get()) }
 }
 
 val apiModule = module {
