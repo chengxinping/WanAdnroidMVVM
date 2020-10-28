@@ -23,7 +23,6 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/White"
         app:cardCornerRadius="1dp"
         app:cardElevation="1dp">
 
@@ -78,7 +77,7 @@
                 android:id="@+id/tv_item_tag"
                 drawable_radius="@{2}"
                 drawable_shapeMode="@{0}"
-                drawable_strokeColor="@{@color/colorAccent}"
+                drawable_strokeColor="@{@color/Cyan}"
                 drawable_strokeWidth="@{0.5f}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +87,7 @@
                 android:paddingRight="5dp"
                 android:paddingBottom="2dp"
                 android:text="@{article.tags.size()>0?article.tags.get(0).name:article.author}"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/Cyan"
                 android:textSize="10dp"
                 android:visibility="@{article.tags.size()>0?View.VISIBLE:View.GONE}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_item_top"
@@ -100,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:text="@{TextUtils.isEmpty(article.author)?article.shareUser:article.author}"
-                android:textColor="@color/item_author"
+                android:textColor="@color/middle_level_text_color"
                 android:textSize="12sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_item_top"
                 app:layout_constraintLeft_toRightOf="@id/tv_item_tag" />
@@ -112,7 +111,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:text="@{article.niceDate}"
-                android:textColor="@color/item_author"
+                android:textColor="@color/middle_level_text_color"
                 android:textSize="12sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/tv_item_top"
                 app:layout_constraintRight_toRightOf="parent" />
@@ -136,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:textColor="@color/item_author"
+                android:textColor="@color/middle_level_text_color"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_item_love"
                 app:layout_constraintLeft_toLeftOf="parent"

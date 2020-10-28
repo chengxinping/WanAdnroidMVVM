@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="high_level_text_color">#b2b2b2</color>
+    <color name="middle_level_text_color">#b3b3b3</color>
+    <color name="flow_background">#23262e</color>
+
+</resources>

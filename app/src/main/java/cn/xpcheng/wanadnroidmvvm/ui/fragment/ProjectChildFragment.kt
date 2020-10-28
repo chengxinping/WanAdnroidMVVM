@@ -87,7 +87,7 @@ class ProjectChildFragment : BaseFragment<ProjectChildViewModel, LayoutRecyclerV
             }
         }
         swipe_refresh.run {
-            setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark);
+            setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 mViewModel.getProjectList(true, cid, isNew)
             }

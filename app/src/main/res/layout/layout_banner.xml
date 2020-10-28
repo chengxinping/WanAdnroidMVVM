@@ -12,7 +12,6 @@
         android:scaleType="fitXY"
         app:banner_indicatorGravity="bottom|right"
         app:banner_isNumberIndicator="true"
-        app:banner_numberIndicatorTextColor="@color/colorAccent"
         app:banner_pointAutoPlayInterval="3000"
         app:banner_pointContainerBackground="#00000000"
         app:banner_pointLeftRightMargin="3dp"

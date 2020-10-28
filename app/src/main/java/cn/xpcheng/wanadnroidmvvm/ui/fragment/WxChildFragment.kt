@@ -85,7 +85,7 @@ class WxChildFragment : BaseFragment<WxChildViewModel, LayoutRecyclerViewBinding
             }
         }
         swipe_refresh.run {
-            setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark);
+            setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 1
                 mViewModel.getWxArticle(cid, page)

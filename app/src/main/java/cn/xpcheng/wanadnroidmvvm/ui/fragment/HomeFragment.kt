@@ -92,7 +92,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             }
         }
         swipe_refresh.run {
-            setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark);
+            setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 0
                 mViewModel.getHomeData(page)

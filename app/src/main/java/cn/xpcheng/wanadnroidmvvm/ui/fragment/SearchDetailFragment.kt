@@ -81,7 +81,7 @@ class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentSearchD
         }
 
         swipe_refresh.run {
-            setColorSchemeResources(R.color.colorAccent, R.color.colorPrimaryDark);
+            setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 0
                 mViewModel.search(searchKey, page)
