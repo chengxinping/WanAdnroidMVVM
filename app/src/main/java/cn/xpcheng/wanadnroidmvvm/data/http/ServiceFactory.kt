@@ -9,8 +9,8 @@ import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.Console
+import retrofit2.converter.moshi.MoshiConverterFactory
+
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -38,9 +38,9 @@ val okHttpClient = OkHttpClient.Builder()
 
 //多个baseUrl处理 再创建新的retrofit
 val retrofit = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
     .client(okHttpClient)
     .baseUrl(Constant.BASE_URL)
+    .addConverterFactory(MoshiConverterFactory.create())
     .build()
 
 //接口代理给koin注入

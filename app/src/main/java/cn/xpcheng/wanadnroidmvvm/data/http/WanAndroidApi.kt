@@ -12,7 +12,7 @@ interface WanAndroidApi {
 
 
     @GET("banner/json")
-    suspend fun getBanner(): BaseApiResponse<ArrayList<Banner>>
+    suspend fun getBanner(): BaseApiResponse<List<Banner>>
 
     /**
      *置顶文章
@@ -62,7 +62,7 @@ interface WanAndroidApi {
      *项目分类
      */
     @GET("project/tree/json")
-    suspend fun getProjectTree(): BaseApiResponse<ArrayList<TreeBean>>
+    suspend fun getProjectTree(): BaseApiResponse<List<TreeBean>>
 
     /**
      * 获取某个项目分类下全部数据

@@ -1,5 +1,6 @@
 package cn.xpcheng.wanadnroidmvvm.base
 
+import android.util.Log
 import androidx.databinding.ViewDataBinding
 import cn.xpcheng.mvvm_core.base.fragment.BaseVmDbFragment
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
@@ -23,6 +24,11 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
     override fun onPause() {
         super.onPause()
         hideSoftKeyboard(mActivity)
+    }
+
+    override fun handlerError(errorMsg: String) {
+        super.handlerError(errorMsg)
+        Log.e("cxp", errorMsg)
     }
 
 }

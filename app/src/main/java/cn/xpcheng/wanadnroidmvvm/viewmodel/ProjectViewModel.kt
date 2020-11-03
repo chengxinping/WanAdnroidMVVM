@@ -23,8 +23,9 @@ class ProjectViewModel(private val projectRepository: ProjectRepository) : BaseV
         launch({ projectRepository.getProjectTree() }, {
             mStateLiveData.postValue(SuccessState)
             val recentlyBean = TreeBean(mutableListOf(), -1, -1, "最新项目", -1, -1, false, -1)
-            it.add(0, recentlyBean)
-            projectTree.postValue(it)
+            val toMutableList = it.toMutableList()
+            toMutableList.add(0,recentlyBean)
+            projectTree.postValue(toMutableList)
         }, {
             mStateLiveData.postValue(ErrorState(it))
         })

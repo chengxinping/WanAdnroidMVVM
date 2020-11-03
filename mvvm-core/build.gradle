@@ -31,10 +31,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.appcompat
-
-    implementation Dependencies.kotlinLibrary
-    implementation Dependencies.ktxCore
 
     //lifecycle组件（liveData+viewModel+lifecycle）
     api Dependencies.lifecycleKtx

@@ -47,16 +47,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //android ui
-    implementation Dependencies.appcompat
+
     implementation Dependencies.supportV4
     implementation Dependencies.constraintLayout
     implementation Dependencies.material
     implementation Dependencies.swipeRefresh
     implementation Dependencies.viewPager2
     implementation Dependencies.flexBoxLayoutManager
-
-    implementation Dependencies.kotlinLibrary
-    implementation Dependencies.ktxCore
 
 
     implementation Dependencies.autoSize
@@ -76,8 +73,8 @@ dependencies {
 
     //retrofit
     api Dependencies.retrofit
-    api Dependencies.retrofitGson
     api Dependencies.okhttpLogging
+    api Dependencies.retrofitMoshi
 
     testImplementation Dependencies.junit
     androidTestImplementation Dependencies.android_junit

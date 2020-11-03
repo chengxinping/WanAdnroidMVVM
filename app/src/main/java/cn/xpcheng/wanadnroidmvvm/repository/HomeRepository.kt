@@ -27,6 +27,6 @@ class HomeRepository(private val wanAndroidApi: WanAndroidApi) {
         data.await()
     }
 
-    suspend fun getBanner(): BaseApiResponse<ArrayList<Banner>> = wanAndroidApi.getBanner()
+    suspend fun getBanner(): BaseApiResponse<List<Banner>> = wanAndroidApi.getBanner()
 
 }

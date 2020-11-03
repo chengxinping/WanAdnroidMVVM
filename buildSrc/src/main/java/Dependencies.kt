@@ -74,7 +74,7 @@ object Dependencies {
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val retrofitMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
     const val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 
     const val koin_scop = "org.koin:koin-androidx-scope:${Versions.koin_version}"

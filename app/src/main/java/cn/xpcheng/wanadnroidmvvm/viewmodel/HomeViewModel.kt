@@ -15,7 +15,7 @@ import cn.xpcheng.wanadnroidmvvm.repository.HomeRepository
 class HomeViewModel(private val mHomeRepository: HomeRepository) : BaseViewModel() {
     var homeArticles = MutableLiveData<ArticleBody>()
 
-    var bannerData = MutableLiveData<ArrayList<Banner>>()
+    var bannerData = MutableLiveData<List<Banner>>()
 
     fun getHomeData(page: Int) {
         launch({ mHomeRepository.getHomeData(page) }, homeArticles, true)

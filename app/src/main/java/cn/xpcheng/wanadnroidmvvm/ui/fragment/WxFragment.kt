@@ -1,5 +1,6 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
+import android.text.Html
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -46,7 +47,7 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
             TabLayoutMediator(
                 tab_layout,
                 view_pager
-            ) { tab, position -> tab.text = it[position].name }.attach();
+            ) { tab, position -> tab.text = Html.fromHtml(it[position].name) }.attach();
         })
     }
 

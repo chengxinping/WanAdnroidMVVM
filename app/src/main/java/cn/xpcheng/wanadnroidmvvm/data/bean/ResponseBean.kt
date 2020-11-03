@@ -68,7 +68,7 @@ data class Article(
     val projectLink: String,
     val publishTime: Long,
     val selfVisible: Int,
-    val shareDate: Long,
+    val shareDate: Long?,
     val shareUser: String,
     val superChapterId: Int,
     val superChapterName: String,

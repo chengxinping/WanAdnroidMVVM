@@ -27,10 +27,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.appcompat
+    api Dependencies.appcompat
 
-    implementation Dependencies.kotlinLibrary
-    implementation Dependencies.ktxCore
+    api Dependencies.kotlinLibrary
+    api Dependencies.ktxCore
 
     testImplementation Dependencies.junit
     androidTestImplementation Dependencies.android_junit
