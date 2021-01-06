@@ -1,6 +1,9 @@
 package cn.xpcheng.wanadnroidmvvm.data.bean
 
+import android.annotation.SuppressLint
+import android.os.Parcelable
 import cn.xpcheng.mvvm_core.base.BaseResponse
+import kotlinx.android.parcel.Parcelize
 
 /**
  *@author chengxinping
@@ -77,8 +80,7 @@ data class Article(
     val type: Int,
     val userId: Int,
     val visible: Int,
-    val zan: Int,
-    var isTop: Boolean = false
+    val zan: Int
 )
 
 data class Tag(
@@ -94,8 +96,10 @@ data class HotKey(
     val visible: Int
 )
 
+@SuppressLint("ParcelCreator")
+@Parcelize
 data class TreeBean(
-    val children: List<Any>,
+    val children: List<String> = listOf(),
     val courseId: Int,
     val id: Int,
     val name: String,
@@ -103,4 +107,24 @@ data class TreeBean(
     val parentChapterId: Int,
     val userControlSetTop: Boolean,
     val visible: Int
+) : Parcelable
+
+//导航数据
+data class NavigationBean(
+    val articles: List<Article>,
+    val cid: Int,
+    val name: String
 )
+
+@SuppressLint("ParcelCreator")
+@Parcelize
+data class Tree(
+    val children: List<TreeBean>,
+    val courseId: Int,
+    val id: Int,
+    val name: String,
+    val order: Long,
+    val parentChapterId: Int,
+    val userControlSetTop: Boolean,
+    val visible: Int
+) : Parcelable

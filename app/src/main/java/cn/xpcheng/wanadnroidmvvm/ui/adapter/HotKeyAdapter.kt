@@ -15,7 +15,7 @@ class HotKeyAdapter(data: MutableList<HotKey>) :
     BaseQuickAdapter<HotKey, BaseDataBindingHolder<ItemFlowBinding>>(R.layout.item_flow, data) {
     override fun convert(holder: BaseDataBindingHolder<ItemFlowBinding>, item: HotKey) {
         holder.dataBinding?.let {
-            it.hotKey = item
+            it.name = item.name
             it.executePendingBindings()
         }
     }

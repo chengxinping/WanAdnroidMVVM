@@ -18,7 +18,7 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get()) }
     viewModel { ProjectViewModel(get()) }
-    viewModel { SquareViewModel() }
+    viewModel { EmptyViewModel() }
     viewModel { WxViewModel(get()) }
     viewModel { MineViewModel() }
     viewModel { WebViewViewModel() }
@@ -26,6 +26,11 @@ val viewModelModule = module {
     viewModel { SearchDetailViewModel(get()) }
     viewModel { WxChildViewModel(get()) }
     viewModel { ProjectChildViewModel(get()) }
+    viewModel { QuestionViewModel(get()) }
+    viewModel { SquareListViewModel(get()) }
+    viewModel { NavigationViewModel(get()) }
+    viewModel { TreeViewModel(get()) }
+    viewModel { TreeArticleViewModel(get()) }
 }
 
 val responseModule = module {
@@ -37,6 +42,11 @@ val responseModule = module {
     factory { WxChildRepository(get()) }
     factory { ProjectRepository(get()) }
     factory { ProjectChildRepository(get()) }
+    factory { QuestionRepository(get()) }
+    factory { SquareListRepository(get()) }
+    factory { NavigationRepository(get()) }
+    factory { TreeRepository(get()) }
+    factory { TreeArticleRepository(get()) }
 }
 
 val apiModule = module {

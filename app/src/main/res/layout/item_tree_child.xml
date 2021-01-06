@@ -5,9 +5,11 @@
 
         <import type="cn.xpcheng.common.utils.ColorUtil" />
 
+        <import type="android.text.Html" />
+
         <variable
-            name="name"
-            type="String" />
+            name="data"
+            type="cn.xpcheng.wanadnroidmvvm.data.bean.TreeBean" />
     </data>
 
     <TextView
@@ -23,7 +25,7 @@
         android:paddingTop="6dp"
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="6dp"
-        android:text="@{name}"
+        android:text="@{Html.fromHtml(data.name).toString()}"
         android:textColor="@{ColorUtil.INSTANCE.randomColor()}"
         android:textSize="15sp">
 

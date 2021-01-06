@@ -14,8 +14,8 @@
             android:id="@+id/tab_layout"
             style="@style/TabLayout"
             android:layout_width="match_parent"
-            app:tabBackground="?attr/colorPrimary"
             android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="center"
             app:tabMode="scrollable" />

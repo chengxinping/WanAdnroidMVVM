@@ -19,9 +19,6 @@ class HomeRepository(private val wanAndroidApi: WanAndroidApi) {
         //第一页时才拉置顶文章
         if (page == 0) {
             val topData = async { wanAndroidApi.getTopArticles() }
-            topData.await().data.forEach {
-                it.isTop = true
-            }
             data.await().data.datas.addAll(0, topData.await().data)
         }
         data.await()

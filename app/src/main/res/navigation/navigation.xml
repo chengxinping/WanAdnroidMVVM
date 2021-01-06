@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/mainFragment">
 
@@ -11,6 +12,14 @@
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
             app:destination="@id/searchFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_treeDetailFragment"
+            app:destination="@id/treeDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -40,6 +49,11 @@
         android:id="@+id/searchDetailFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchDetailFragment"
         android:label="搜索详情"></fragment>
+
+    <fragment
+        android:id="@+id/treeDetailFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.TreeDetailFragment"
+        tools:layout="知识体系"></fragment>
     <action
         android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"

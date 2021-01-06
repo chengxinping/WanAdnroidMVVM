@@ -22,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *@desc
  */
 
-class WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBindingImpl>() {
+class  WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBindingImpl>() {
     override fun getLayoutId(): Int = R.layout.fragment_webview
 
     private val mViewModel: WebViewViewModel by viewModel()

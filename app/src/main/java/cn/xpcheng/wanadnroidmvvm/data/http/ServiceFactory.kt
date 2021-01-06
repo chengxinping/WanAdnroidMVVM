@@ -5,6 +5,8 @@ import cn.xpcheng.wanadnroidmvvm.App
 import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.http.interceptor.CacheInterceptor
 import cn.xpcheng.wanadnroidmvvm.data.http.interceptor.HeaderInterceptor
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,11 +38,14 @@ val okHttpClient = OkHttpClient.Builder()
     .build()
 
 
+val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 //多个baseUrl处理 再创建新的retrofit
 val retrofit = Retrofit.Builder()
     .client(okHttpClient)
     .baseUrl(Constant.BASE_URL)
-    .addConverterFactory(MoshiConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .build()
 
 //接口代理给koin注入

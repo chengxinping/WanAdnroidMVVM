@@ -48,7 +48,7 @@ class ProjectFragment : BaseFragment<ProjectViewModel, LayoutTablayoutBinding>()
                 view_pager
             ) { tab, position ->
                 tab.text = Html.fromHtml(it[position].name)
-            }.attach();
+            }.attach()
         })
     }
 

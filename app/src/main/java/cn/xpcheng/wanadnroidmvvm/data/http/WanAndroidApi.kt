@@ -82,4 +82,33 @@ interface WanAndroidApi {
     @GET("article/listproject/{page}/json")
     suspend fun getRecentlyProjects(@Path("page") page: Int): BaseApiResponse<ArticleBody>
 
+    /**
+     * 问答列表
+     *  @param page 每日一问的页码从1开始
+     */
+    @GET("wenda/list/{page}/json")
+    suspend fun getQuestionList(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+
+    /**
+     * 广场列表
+     * @param page 每日一问的页码从0开始
+     */
+    @GET("user_article/list/{page}/json")
+    suspend fun getSquareList(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+
+    /**
+     * 导航数据
+     */
+    @GET("navi/json")
+    suspend fun getNavigation(): BaseApiResponse<List<NavigationBean>>
+
+
+    @GET("tree/json")
+    suspend fun getTree(): BaseApiResponse<List<Tree>>
+
+    @GET("article/list/{page}/json")
+    suspend fun getTreeArticle(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): BaseApiResponse<ArticleBody>
 }

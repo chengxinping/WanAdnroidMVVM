@@ -32,6 +32,10 @@ object Versions {
     const val flexBoxLayoutManager = "2.0.1"
 
     const val noDrawable = "1.1.1"
+
+    const val verticalTabLayout = "1.2.5"
+
+    const val moshiKtx = "1.11.0"
 }
 
 object BuildVersions {
@@ -103,4 +107,8 @@ object Dependencies {
     const val agentWeb = "com.just.agentweb:agentweb:${Versions.agentWeb}"
 
     const val noDrawable = "com.github.whataa:noDrawable:${Versions.noDrawable}"
+
+    const val verticalTabLayout = "q.rorbin:VerticalTabLayout:${Versions.verticalTabLayout}"
+
+    const val moshiKtx = "com.squareup.moshi:moshi-kotlin:${Versions.moshiKtx}"
 }
