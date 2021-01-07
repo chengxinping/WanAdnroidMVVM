@@ -2,7 +2,7 @@ package cn.xpcheng.wanadnroidmvvm.data.bean
 
 import android.annotation.SuppressLint
 import android.os.Parcelable
-import cn.xpcheng.mvvm_core.base.BaseResponse
+import cn.xpcheng.mvvm_core.base.network.BaseResponse
 import kotlinx.android.parcel.Parcelize
 
 /**

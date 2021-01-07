@@ -2,6 +2,7 @@ package cn.xpcheng.mvvm_core.ext
 
 import cn.xpcheng.mvvm_core.base.activity.BaseVmActivity
 import cn.xpcheng.mvvm_core.base.fragment.BaseVmFragment
+import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.mvvm_core.base.viewmodel.Error
 import cn.xpcheng.mvvm_core.base.viewmodel.Loading
 import cn.xpcheng.mvvm_core.base.viewmodel.ResultState
@@ -23,7 +24,7 @@ import cn.xpcheng.mvvm_core.base.viewmodel.Success
 fun <T> BaseVmActivity<*>.parseStatusData(
     resultStatusData: ResultState<T>,
     onSuccess: (T) -> Unit,
-    onError: ((String?) -> Unit)? = null,
+    onError: ((AppException) -> Unit)? = null,
     onLoading: (() -> Unit)? = null
 ) {
     when (resultStatusData) {
@@ -37,7 +38,7 @@ fun <T> BaseVmActivity<*>.parseStatusData(
         }
         is Error -> {
             hideLoading()
-            onError?.invoke(resultStatusData.message)
+            onError?.invoke(resultStatusData.error)
         }
     }
 }
@@ -52,7 +53,7 @@ fun <T> BaseVmActivity<*>.parseStatusData(
 fun <T> BaseVmFragment<*>.parseStatusData(
     resultStatusData: ResultState<T>,
     onSuccess: (T) -> Unit,
-    onError: ((String?) -> Unit)? = null,
+    onError: ((AppException) -> Unit)? = null,
     onLoading: (() -> Unit)? = null
 ) {
     when (resultStatusData) {
@@ -66,7 +67,7 @@ fun <T> BaseVmFragment<*>.parseStatusData(
         }
         is Error -> {
             hideLoading()
-            onError?.invoke(resultStatusData.message)
+            onError?.invoke(resultStatusData.error)
         }
     }
 

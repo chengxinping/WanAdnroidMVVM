@@ -38,10 +38,10 @@ dependencies {
     api Dependencies.livedataKtx
 
 
-    //test
-    testImplementation Dependencies.junit
-    androidTestImplementation Dependencies.android_junit
-    androidTestImplementation Dependencies.espresso
+    //retrofit
+    api Dependencies.retrofit
+    api Dependencies.okhttpLogging
+    api Dependencies.retrofitMoshi
 
     //module
     api project(path: ':common')

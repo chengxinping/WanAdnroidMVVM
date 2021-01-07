@@ -1,5 +1,7 @@
 package cn.xpcheng.mvvm_core.base.viewmodel
 
+import cn.xpcheng.mvvm_core.base.network.AppException
+
 /**
  * @author chengxinping
  * @time 2020年05月18日11:53:11
@@ -21,4 +23,4 @@ object SuccessState : StateActionEvent()
 /**
  * 错误状态  toast or SnackBar
  */
-class ErrorState(val message: String?) : StateActionEvent()
+class ErrorState(val error: AppException) : StateActionEvent()

@@ -71,10 +71,6 @@ dependencies {
     implementation Dependencies.koin_viewmodel
     implementation Dependencies.koin_ext
 
-    //retrofit
-    api Dependencies.retrofit
-    api Dependencies.okhttpLogging
-    api Dependencies.retrofitMoshi
 
     testImplementation Dependencies.junit
     androidTestImplementation Dependencies.android_junit

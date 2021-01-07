@@ -1,20 +1,20 @@
 object Versions {
-    const val kotlin = "1.3.72"
-    const val gradle_tools = "4.1.0"
+    const val kotlin = "1.4.21"
+    const val gradle_tools = "4.1.1"
 
-    const val appcompat = "1.1.0"
-    const val material = "1.1.0"
-    const val constraint = "1.1.3"
+    const val appcompat = "1.2.0"
+    const val material = "1.2.1"
+    const val constraint = "2.0.4"
     const val swipeRefresh = "1.1.0"
 
     const val lifecycle = "2.2.0"
-    const val navigation = "2.3.0"
-    const val room = "2.2.5"
+    const val navigation = "2.3.2"
+    const val room = "2.2.6"
 
     const val retrofit = "2.9.0"
-    const val okHttp = "4.8.0"
+    const val okHttp = "4.9.0"
 
-    const val koin_version = "2.1.6"
+    const val koin_version = "2.2.2"
 
     const val autosize = "1.2.1"
 
@@ -25,7 +25,7 @@ object Versions {
     const val brvah = "3.0.4"
 
 
-    const val coil = "1.0.0-rc3"
+    const val coil = "1.1.0"
 
     const val agentWeb = "4.1.4"
 
@@ -44,7 +44,7 @@ object BuildVersions {
     const val targetSdkVersion = 29
     const val versionCode = 1
     const val versionName = "1.0.0"
-    const val build_tools = "29.0.3"
+    const val build_tools = "30.0.2"
     const val application_id = "cn.xpcheng.wanadnroidmvvm"
 }
 
@@ -57,7 +57,7 @@ object BuildPlugins {
 
 object Dependencies {
     const val kotlinLibrary = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-    const val ktxCore = "androidx.core:core-ktx:1.2.0"
+    const val ktxCore = "androidx.core:core-ktx:1.3.2"
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val supportV4 = "androidx.legacy:legacy-support-v4:1.0.0"
@@ -71,7 +71,7 @@ object Dependencies {
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 
-    const val navigation = "androidx.navigation:navigation-runtime:${Versions.navigation}"
+    const val navigation = "androidx.navigation:navigation-runtime-ktx:${Versions.navigation}"
 
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val room = "androidx.room:room-runtime:${Versions.room}"
@@ -89,9 +89,9 @@ object Dependencies {
 
     const val viewPager2 = "androidx.viewpager2:viewpager2:${Versions.viewPager2}"
 
-    const val junit = "junit:junit:4.12"
-    const val espresso = "androidx.test.espresso:espresso-core:3.2.0"
-    const val android_junit = "androidx.test.ext:junit:1.1.1"
+    const val junit = "junit:junit:4.+"
+    const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
+    const val android_junit = "androidx.test.ext:junit:1.1.2"
 
 
     //banner

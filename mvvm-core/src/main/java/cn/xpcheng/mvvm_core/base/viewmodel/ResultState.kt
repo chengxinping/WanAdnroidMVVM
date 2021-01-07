@@ -1,5 +1,7 @@
 package cn.xpcheng.mvvm_core.base.viewmodel
 
+import cn.xpcheng.mvvm_core.base.network.AppException
+
 /**
  * @author chengxinping
  * @time 2020年08月20日09:49:06
@@ -10,7 +12,7 @@ sealed class ResultState<out T> {
     companion object {
         fun <T> onAppSuccess(data: T): ResultState<T> = Success(data)
         fun <T> onAppLoading(): ResultState<T> = Loading
-        fun <T> onAppError(error: String?): ResultState<T> = Error(error)
+        fun <T> onAppError(error: AppException): ResultState<T> = Error(error)
     }
 }
 
@@ -28,4 +30,4 @@ data class Success<out T>(val data: T) : ResultState<T>()
 /**
  * 错误状态  toast or SnackBar
  */
-data class Error(val message: String?) : ResultState<Nothing>()
+data class Error(val error: AppException) : ResultState<Nothing>()

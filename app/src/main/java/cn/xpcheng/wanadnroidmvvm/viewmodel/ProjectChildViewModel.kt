@@ -26,12 +26,16 @@ class ProjectChildViewModel(private val projectChildRepository: ProjectChildRepo
         mStateLiveData.postValue(LoadingState)
         if (isRefresh)
             page = if (isNew) 0 else 1
-        launch({ projectChildRepository.getProjectArticles(page, cid, isNew) }, {
-            page++
-            mStateLiveData.postValue(SuccessState)
-            projectArticles.postValue(it)
-        }, {
-            mStateLiveData.postValue(ErrorState(it))
-        })
+        launch({ projectChildRepository.getProjectArticles(page, cid, isNew) },
+            isShowLoading = true,
+            isSpecialError = true,
+            success = {
+                page++
+                mStateLiveData.postValue(SuccessState)
+                projectArticles.postValue(it)
+            },
+            error = {
+                mStateLiveData.postValue(ErrorState(it))
+            })
     }
 }

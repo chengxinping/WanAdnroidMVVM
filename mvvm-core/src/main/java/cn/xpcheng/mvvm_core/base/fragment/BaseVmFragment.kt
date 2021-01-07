@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
 import cn.xpcheng.mvvm_core.base.viewmodel.ErrorState
 import cn.xpcheng.mvvm_core.base.viewmodel.LoadingState
@@ -104,9 +105,7 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
                     is SuccessState -> hideLoading()
                     is ErrorState -> {
                         hideLoading()
-                        stateActionEvent.message?.let {
-                            handlerError(stateActionEvent.message)
-                        }
+                        handlerError(stateActionEvent.error)
                     }
                 }
             })
@@ -118,5 +117,5 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
 
     open fun hideLoading() {}
 
-    open fun handlerError(errorMsg: String) {}
+    open fun handlerError(appException: AppException) {}
 }

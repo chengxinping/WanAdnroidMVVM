@@ -2,6 +2,7 @@ package cn.xpcheng.wanadnroidmvvm.base
 
 import androidx.databinding.ViewDataBinding
 import cn.xpcheng.mvvm_core.base.activity.BaseVmDbActivity
+import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
 
 /**
@@ -21,4 +22,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> :
         super.hideLoading()
     }
 
+    override fun handlerError(appException: AppException) {
+        super.handlerError(appException)
+
+    }
 }

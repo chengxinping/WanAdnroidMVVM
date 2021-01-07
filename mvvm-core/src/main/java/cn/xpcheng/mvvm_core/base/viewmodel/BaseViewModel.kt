@@ -3,7 +3,9 @@ package cn.xpcheng.mvvm_core.base.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cn.xpcheng.mvvm_core.base.BaseResponse
+import cn.xpcheng.mvvm_core.base.network.AppException
+import cn.xpcheng.mvvm_core.base.network.BaseResponse
+import cn.xpcheng.mvvm_core.base.network.ExceptionHandle
 import kotlinx.coroutines.*
 
 /**
@@ -43,10 +45,21 @@ open class BaseViewModel : ViewModel() {
                     mStateLiveData.postValue(SuccessState)
                     liveData.postValue(it.getResponseData())
                 } else {
-                    mStateLiveData.postValue(ErrorState(it.getResponseMsg()))
+                    mStateLiveData.postValue(
+                        ErrorState(
+                            AppException(
+                                it.getResponseCode(),
+                                it.getResponseMsg()
+                            )
+                        )
+                    )
                 }
             }.onFailure {
-                mStateLiveData.postValue(ErrorState(it.message))
+                mStateLiveData.postValue(
+                    ErrorState(
+                        ExceptionHandle.handleException(it)
+                    )
+                )
             }
         }
     }
@@ -73,9 +86,20 @@ open class BaseViewModel : ViewModel() {
                 if (it.isSuccess())
                     liveData.postValue(ResultState.onAppSuccess(it.getResponseData()))
                 else
-                    liveData.postValue(ResultState.onAppError(it.getResponseMsg()))
+                    liveData.postValue(
+                        ResultState.onAppError(
+                            AppException(
+                                it.getResponseCode(),
+                                it.getResponseMsg()
+                            )
+                        )
+                    )
             }.onFailure {
-                liveData.postValue(ResultState.onAppError(it.message))
+                liveData.postValue(
+                    ResultState.onAppError(
+                        ExceptionHandle.handleException(it)
+                    )
+                )
             }
         }
     }
@@ -83,19 +107,21 @@ open class BaseViewModel : ViewModel() {
 
     /**
      *在viewmodel 里面处理的成功失败
-     * 需要自己控制 loading
      * @param block 网络请求方法体
      * @param success 成功请求回调
      * @param error 失败请求回调 可以不传
      */
     fun <T> launch(
         block: suspend CoroutineScope.() -> BaseResponse<T>,
+        isShowLoading: Boolean = false,
+        isSpecialError: Boolean = false,
         success: (T) -> Unit,
-        error: (String) -> Unit = {}
+        error: (AppException) -> Unit = {}
     ): Job {
         return viewModelScope.launch {
             //ktx扩展 代替try-catch
             runCatching {
+                if (isShowLoading) mStateLiveData.postValue(LoadingState)
                 withContext(Dispatchers.IO) {
                     block()
                 }
@@ -103,12 +129,24 @@ open class BaseViewModel : ViewModel() {
 
                 //可以再封装一下 将错误包装秤自定义异常
                 if (it.isSuccess()) {
+                    mStateLiveData.postValue(SuccessState)
                     success(it.getResponseData())
                 } else {
-                    error(it.getResponseMsg())
+                    val appException = AppException(
+                        it.getResponseCode(),
+                        it.getResponseMsg()
+                    )
+                    mStateLiveData.postValue(ErrorState(appException))
+                    error(appException)
                 }
             }.onFailure {
-                error(it.message.toString())
+                val appException = ExceptionHandle.handleException(it)
+                if (isSpecialError) {
+                    mStateLiveData.postValue(SuccessState)
+                } else {
+                    mStateLiveData.postValue(ErrorState(appException))
+                }
+                error(appException)
             }
         }
     }

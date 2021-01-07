@@ -1,4 +1,4 @@
-package cn.xpcheng.mvvm_core.base
+package cn.xpcheng.mvvm_core.base.network
 
 /**
  *@author chengxinping

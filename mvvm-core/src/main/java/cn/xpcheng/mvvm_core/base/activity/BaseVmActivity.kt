@@ -1,6 +1,7 @@
 package cn.xpcheng.mvvm_core.base.activity
 
 import androidx.lifecycle.Observer
+import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
 import cn.xpcheng.mvvm_core.base.viewmodel.ErrorState
 import cn.xpcheng.mvvm_core.base.viewmodel.LoadingState
@@ -12,7 +13,6 @@ import cn.xpcheng.mvvm_core.base.viewmodel.SuccessState
  *@desc 使用ViewModel的baseActivity
  */
 abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
-
 
 
     abstract fun getViewModel(): VM
@@ -42,9 +42,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
                     is SuccessState -> hideLoading()
                     is ErrorState -> {
                         hideLoading()
-                        stateActionEvent.message?.let {
-                            handlerError(stateActionEvent.message)
-                        }
+                        handlerError(stateActionEvent.error)
                     }
                 }
             })
@@ -55,6 +53,6 @@ abstract class BaseVmActivity<VM : BaseViewModel> : BaseActivity() {
 
     open fun hideLoading() {}
 
-    open fun handlerError(errorMsg: String) {}
+    open fun handlerError(appException: AppException) {}
 
 }

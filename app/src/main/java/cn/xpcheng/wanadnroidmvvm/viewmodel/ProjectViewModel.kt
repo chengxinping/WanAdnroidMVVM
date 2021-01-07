@@ -18,16 +18,18 @@ class ProjectViewModel(private val projectRepository: ProjectRepository) : BaseV
     var projectTree: MutableLiveData<List<TreeBean>> = MutableLiveData()
 
     fun getProjectTree() {
-//        launch({ projectRepository.getProjectTree() }, projectTree, false)
-        mStateLiveData.postValue(LoadingState)
-        launch({ projectRepository.getProjectTree() }, {
-            mStateLiveData.postValue(SuccessState)
-            val recentlyBean = TreeBean(mutableListOf(), -1, -1, "最新项目", -1, -1, false, -1)
-            val toMutableList = it.toMutableList()
-            toMutableList.add(0, recentlyBean)
-            projectTree.postValue(toMutableList)
-        }, {
-            mStateLiveData.postValue(ErrorState(it))
-        })
+        launch(
+            { projectRepository.getProjectTree() },
+            isShowLoading = true,
+            isSpecialError = true,
+            success = {
+                val recentlyBean = TreeBean(mutableListOf(), -1, -1, "最新项目", -1, -1, false, -1)
+                val toMutableList = it.toMutableList()
+                toMutableList.add(0, recentlyBean)
+                projectTree.postValue(toMutableList)
+            },
+            error = {
+                mStateLiveData.postValue(ErrorState(it))
+            })
     }
 }

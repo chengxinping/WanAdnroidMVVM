@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
+import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.constant.Constant
@@ -173,8 +174,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         }
     }
 
-    override fun handlerError(errorMsg: String) {
-        super.handlerError(errorMsg)
+    override fun handlerError(appException: AppException) {
+        super.handlerError(appException)
         mAdapter.loadMoreModule.loadMoreFail()
     }
 
