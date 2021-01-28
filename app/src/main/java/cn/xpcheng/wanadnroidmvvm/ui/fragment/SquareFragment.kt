@@ -8,9 +8,6 @@ import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.EmptyViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.view_pager
-import kotlinx.android.synthetic.main.layout_tablayout.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -38,11 +35,11 @@ class SquareFragment : BaseFragment<EmptyViewModel, LayoutTablayoutBinding>() {
 
     override fun initView() {
 
-        tab_layout.run {
+        mDataBinding.tabLayout.run {
             tabMode = TabLayout.MODE_FIXED
         }
 
-        view_pager.run {
+        mDataBinding.viewPager.run {
             offscreenPageLimit = mFragments.size
 
             adapter = object : FragmentStateAdapter(this@SquareFragment) {
@@ -55,8 +52,8 @@ class SquareFragment : BaseFragment<EmptyViewModel, LayoutTablayoutBinding>() {
             }
         }
         TabLayoutMediator(
-            tab_layout,
-            view_pager
+            mDataBinding.tabLayout,
+            mDataBinding.viewPager
         ) { tab, position ->
             tab.text = mTitle[position]
         }.attach()

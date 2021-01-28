@@ -2,27 +2,24 @@ package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
+import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.data.bean.WebViewData
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentHomeBinding
+import cn.xpcheng.wanadnroidmvvm.databinding.LayoutBannerBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.HomeViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import coil.load
-import kotlinx.android.synthetic.main.layout_banner.view.*
-import kotlinx.android.synthetic.main.layout_recycler_view.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -36,8 +33,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     private var page = 0
 
-    private val bannerView: View by lazy {
-        layoutInflater.inflate(R.layout.layout_banner, null, false)
+//    private val bannerView: View by lazy {
+//        layoutInflater.inflate(R.layout.layout_banner, null, false)
+//    }
+
+    private val bannerBinding: LayoutBannerBinding by lazy {
+        LayoutBannerBinding.inflate(layoutInflater)
     }
 
     private val mLinearLayoutManager: LinearLayoutManager by lazy {
@@ -60,7 +61,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun getViewModel(): HomeViewModel = mViewModel
 
     override fun initView() {
-        toolbar.init("首页").run {
+        mDataBinding.layoutToolbar.toolbar.init("首页").run {
             inflateMenu(R.menu.home_search)
             setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -70,29 +71,26 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 true
             }
         }
-        recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
         mAdapter.run {
-            addHeaderView(bannerView)
+
+            addHeaderView(bannerBinding.root)
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.getHomeData(page)
             }
             setOnItemClickListener { _, _, position ->
 
-                nav(R.id.action_global_webViewFragment, Bundle().apply {
-                    putParcelable(
-                        Constant.KEY_WEB_VIEW_DATA, WebViewData(
-                            mData[position].id,
-                            mData[position].link,
-                            mData[position].title,
-                            mData[position].collect
-                        )
+                nav(
+                    NavigationDirections.actionGlobalWebViewFragment(
+                        mData[position].id, mData[position].link, mData[position].title,
+                        mData[position].collect
                     )
-                })
+                )
             }
         }
-        swipe_refresh.run {
+        mDataBinding.recyclerView.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 0
@@ -100,8 +98,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             }
         }
 
-        fab.setOnClickListener {
-            recycler.run {
+        mDataBinding.recyclerView.fab.setOnClickListener {
+            mDataBinding.recyclerView.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
@@ -123,7 +121,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             homeArticles.observe(viewLifecycleOwner, Observer {
                 page++
                 if (it.curPage == 1) {
-                    swipe_refresh.isRefreshing = false
+                    mDataBinding.recyclerView.swipeRefresh.isRefreshing = false
                     mAdapter.setList(it.datas)
                 } else {
                     mAdapter.addData(it.datas)
@@ -147,7 +145,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                     bannerTitle.add(banner.title)
 
                 }
-                bannerView.banner.run {
+                bannerBinding.banner.run {
                     setAutoPlayAble(imageUrls.size > 1)
                     setData(imageUrls, bannerTitle)
                     setAdapter { _, itemView, model, _ ->
@@ -157,16 +155,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                         }
                     }
                     setDelegate { _, _, _, position ->
-                        nav(R.id.action_global_webViewFragment, Bundle().apply {
-                            putParcelable(
-                                Constant.KEY_WEB_VIEW_DATA, WebViewData(
-                                    it[position].id,
-                                    it[position].url,
-                                    it[position].title,
-                                    false
-                                )
+                        nav(
+                            NavigationDirections.actionGlobalWebViewFragment(
+                                it[position].id,
+                                it[position].url,
+                                it[position].title,
+                                false
                             )
-                        })
+                        )
                     }
                 }
 

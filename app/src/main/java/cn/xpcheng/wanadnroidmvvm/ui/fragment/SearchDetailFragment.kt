@@ -1,16 +1,15 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import android.content.Context
-import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
+import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.data.bean.WebViewData
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentSearchDetailBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.initClose
@@ -19,8 +18,6 @@ import cn.xpcheng.wanadnroidmvvm.ext.navigateBack
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchDetailViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
-import kotlinx.android.synthetic.main.layout_recycler_view.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -30,8 +27,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentSearchDetailBinding>() {
 
-    private var searchKey: String = ""
     private var page = 0
+
+    private val args: SearchDetailFragmentArgs by navArgs()
 
     private val mViewModel: SearchDetailViewModel by viewModel()
 
@@ -57,40 +55,36 @@ class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentSearchD
 
     override fun initView() {
 
-        recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
         mAdapter.run {
 
             loadMoreModule.setOnLoadMoreListener {
-                mViewModel.search(searchKey, page)
+                mViewModel.search(args.searchKey, page)
             }
             setOnItemClickListener { _, _, position ->
 
-                nav(R.id.action_global_webViewFragment, Bundle().apply {
-                    putParcelable(
-                        Constant.KEY_WEB_VIEW_DATA, WebViewData(
-                            mData[position].id,
-                            mData[position].link,
-                            mData[position].title,
-                            mData[position].collect
-                        )
+                nav(
+                    NavigationDirections.actionGlobalWebViewFragment(
+                        mData[position].id, mData[position].link, mData[position].title,
+                        mData[position].collect
                     )
-                })
+                )
             }
         }
 
-        swipe_refresh.run {
+        mDataBinding.recyclerView.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 0
-                mViewModel.search(searchKey, page)
+                mViewModel.search(args.searchKey, page)
             }
         }
 
-        fab.setOnClickListener {
-            recycler.run {
+        mDataBinding.recyclerView.fab.setOnClickListener {
+            mDataBinding.recyclerView.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
@@ -103,23 +97,21 @@ class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentSearchD
 
     override fun initData() {
         super.initData()
-        arguments?.run {
-            searchKey = getString("searchKey", "")
-        }
-        toolbar.initClose(searchKey, onBack = {
+
+        mDataBinding.layoutToolbar.toolbar.initClose(args.searchKey, onBack = {
             navigateBack()
         })
     }
 
     override fun lazyLoadData() {
-        mViewModel.search(searchKey, page)
+        mViewModel.search(args.searchKey, page)
     }
 
     override fun createObserver() {
         mViewModel.searchResult.observe(viewLifecycleOwner, Observer {
             page++
             if (it.curPage == 1) {
-                swipe_refresh.isRefreshing = false
+                mDataBinding.recyclerView.swipeRefresh.isRefreshing = false
                 mAdapter.setList(it.datas)
             } else {
                 mAdapter.addData(it.datas)

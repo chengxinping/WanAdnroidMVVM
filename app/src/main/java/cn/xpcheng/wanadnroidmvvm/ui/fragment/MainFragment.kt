@@ -1,13 +1,15 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
+import cn.xpcheng.wanadnroidmvvm.data.http.NULL_TO_EMPTY_STRING_ADAPTER
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentMainBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.squareup.moshi.Moshi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -24,21 +26,21 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     override fun getViewModel(): MainViewModel = mViewModel
 
     override fun initView() {
-        bottom_navigation.run {
+        mDataBinding.bottomNavigation.run {
             labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
-                    R.id.navigation_home -> view_pager.setCurrentItem(0, false)
-                    R.id.navigation_wechat -> view_pager.setCurrentItem(1, false)
-                    R.id.navigation_square -> view_pager.setCurrentItem(2, false)
-                    R.id.navigation_project -> view_pager.setCurrentItem(3, false)
-                    R.id.navigation_mine -> view_pager.setCurrentItem(4, false)
+                    R.id.navigation_home -> mDataBinding.viewPager.setCurrentItem(0, false)
+                    R.id.navigation_wechat -> mDataBinding.viewPager.setCurrentItem(1, false)
+                    R.id.navigation_square -> mDataBinding.viewPager.setCurrentItem(2, false)
+                    R.id.navigation_project -> mDataBinding.viewPager.setCurrentItem(3, false)
+                    R.id.navigation_mine -> mDataBinding.viewPager.setCurrentItem(4, false)
                 }
                 true
             }
         }
 
-        view_pager.run {
+        mDataBinding.viewPager.run {
             //是否可以滑动
             isUserInputEnabled = false
             offscreenPageLimit = 5

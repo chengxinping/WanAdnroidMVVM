@@ -6,7 +6,6 @@ import cn.xpcheng.wanadnroidmvvm.databinding.ItemHomeBinding
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import kotlinx.android.synthetic.main.item_home.view.*
 
 /**
  *@author chengxinping
@@ -24,8 +23,8 @@ class HomeAdapter(data: MutableList<Article>) :
             item.chapterName.isNotEmpty() -> item.chapterName
             else -> ""
         }
-        holder.itemView.tv_item_type.text = chapterName
         holder.dataBinding?.let {
+            it.tvItemType.text = chapterName
             it.article = item
             it.executePendingBindings()
         }

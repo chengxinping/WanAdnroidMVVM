@@ -10,9 +10,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_toolbar" />
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/layout_toolbar" />
 
-        <include layout="@layout/layout_recycler_view" />
+        <include
+            android:id="@+id/recycler_view"
+            layout="@layout/layout_recycler_view" />
 
     </LinearLayout>
 </layout>

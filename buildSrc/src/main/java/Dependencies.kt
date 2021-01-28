@@ -35,6 +35,7 @@ object Versions {
 
     const val verticalTabLayout = "1.2.5"
 
+    const val mmkv = "1.2.7"
     const val moshiKtx = "1.11.0"
 }
 
@@ -52,6 +53,8 @@ object BuildPlugins {
     const val androidGradle = "com.android.tools.build:gradle:${Versions.gradle_tools}"
     const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val koinGradle = "org.koin:koin-gradle-plugin:${Versions.koin_version}"
+    const val navigationGradle =
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 }
 
 
@@ -72,6 +75,8 @@ object Dependencies {
     const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 
     const val navigation = "androidx.navigation:navigation-runtime-ktx:${Versions.navigation}"
+    const val navigationFragment =
+        "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
 
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val room = "androidx.room:room-runtime:${Versions.room}"
@@ -109,6 +114,9 @@ object Dependencies {
     const val noDrawable = "com.github.whataa:noDrawable:${Versions.noDrawable}"
 
     const val verticalTabLayout = "q.rorbin:VerticalTabLayout:${Versions.verticalTabLayout}"
+
+
+    const val mmkv = "com.tencent:mmkv-static:${Versions.mmkv}"
 
     const val moshiKtx = "com.squareup.moshi:moshi-kotlin:${Versions.moshiKtx}"
 }

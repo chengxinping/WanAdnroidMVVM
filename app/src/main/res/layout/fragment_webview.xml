@@ -10,11 +10,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/layout_toolbar" />
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/layout_toolbar" />
 
 
         <LinearLayout
-            android:id="@+id/webview_container"
+            android:id="@+id/web_view_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" />

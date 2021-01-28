@@ -111,4 +111,26 @@ interface WanAndroidApi {
         @Path("page") page: Int,
         @Query("cid") cid: Int
     ): BaseApiResponse<ArticleBody>
+
+
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") pwd: String
+    ): BaseApiResponse<UserInfo>
+
+    /**
+     * 注册
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    suspend fun register(
+        @Field("username") username: String,
+        @Field("password") pwd: String,
+        @Field("repassword") rpwd: String
+    ): BaseApiResponse<UserInfo>
+
+    @GET("user/logout/json")
+    suspend fun logout(): BaseApiResponse<String>
 }

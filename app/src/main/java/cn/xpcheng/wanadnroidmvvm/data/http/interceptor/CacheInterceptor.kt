@@ -2,6 +2,7 @@ package cn.xpcheng.wanadnroidmvvm.data.http.interceptor
 
 import cn.xpcheng.common.utils.NetworkUtils
 import cn.xpcheng.mvvm_core.Ktx
+import cn.xpcheng.wanadnroidmvvm.App
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -15,13 +16,13 @@ class CacheInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        if (!NetworkUtils.isNetworkAvailable(Ktx.app)) {
+        if (!NetworkUtils.isNetworkAvailable(App.context)) {
             request = request.newBuilder()
                     .cacheControl(CacheControl.FORCE_CACHE)
                     .build()
         }
         val response = chain.proceed(request)
-        if (NetworkUtils.isNetworkAvailable(Ktx.app)) {
+        if (NetworkUtils.isNetworkAvailable(App.context)) {
             // 有网络时 设置缓存超时时间0个小时
             val maxAge = 0
             response.newBuilder()

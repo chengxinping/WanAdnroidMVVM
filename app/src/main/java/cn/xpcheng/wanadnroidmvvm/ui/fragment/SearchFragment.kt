@@ -21,8 +21,6 @@ import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchViewModel
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -54,7 +52,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
     override fun initView() {
         mDataBinding.viewModel = mViewModel
         setHasOptionsMenu(true)
-        toolbar.run {
+        mDataBinding.layoutToolbar.toolbar.run {
             mActivity.setSupportActionBar(this)
             initClose { navigateBack() }
         }
@@ -66,27 +64,23 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
             //左对齐
             justifyContent = JustifyContent.FLEX_START
         }
-        ry_hot_search.init(flexLayoutManager, mHotKeyAdapter)
+        mDataBinding.ryHotSearch.init(flexLayoutManager, mHotKeyAdapter)
         mHotKeyAdapter.run {
             setOnItemClickListener { _, _, position ->
                 saveHistory(data[position].name)
-                nav(R.id.action_searchFragment_to_searchDetailFragment, Bundle().apply {
-                    putString("searchKey", data[position].name)
-                })
+                nav(SearchFragmentDirections.actionSearchFragmentToSearchDetailFragment(data[position].name))
             }
         }
 
         mHistoryAdapter.run {
             setOnItemClickListener { _, _, position ->
                 saveHistory(data[position].history)
-                nav(R.id.action_searchFragment_to_searchDetailFragment, Bundle().apply {
-                    putString("searchKey", data[position].history)
-                })
+                nav(SearchFragmentDirections.actionSearchFragmentToSearchDetailFragment(data[position].history))
 
             }
         }
 
-        ry_history_search.init(mLinearLayoutManager, mHistoryAdapter)
+        mDataBinding.ryHistorySearch.init(mLinearLayoutManager, mHistoryAdapter)
 
 
     }
@@ -126,9 +120,11 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         query?.let {
                             saveHistory(it)
-                            nav(R.id.action_searchFragment_to_searchDetailFragment, Bundle().apply {
-                                putString("searchKey", it)
-                            })
+                            nav(
+                                SearchFragmentDirections.actionSearchFragmentToSearchDetailFragment(
+                                    it
+                                )
+                            )
                         }
                         return false
                     }

@@ -9,7 +9,6 @@ import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.WxViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.layout_tablayout.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -31,7 +30,7 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
 
     override fun createObserver() {
         mViewModel.wxTree.observe(viewLifecycleOwner, Observer {
-            view_pager.run {
+            mDataBinding.viewPager.run {
                 offscreenPageLimit = it.size
 
                 adapter = object : FragmentStateAdapter(this@WxFragment) {
@@ -45,8 +44,8 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
             }
 
             TabLayoutMediator(
-                tab_layout,
-                view_pager
+                mDataBinding.tabLayout,
+                mDataBinding.viewPager
             ) { tab, position -> tab.text = Html.fromHtml(it[position].name) }.attach();
         })
     }

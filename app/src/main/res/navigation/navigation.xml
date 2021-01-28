@@ -23,13 +23,39 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="data"
+                app:argType="cn.xpcheng.wanadnroidmvvm.data.bean.Tree" />
+            <argument
+                android:name="index"
+                android:defaultValue="0"
+                app:argType="integer" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/webViewFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.WebViewFragment"
-        android:label="详情"></fragment>
+        android:label="详情">
+        <argument
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
+        <argument
+            android:name="url"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="isCollect"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
 
     <fragment
         android:id="@+id/searchFragment"
@@ -42,23 +68,88 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="searchKey"
+                android:defaultValue=""
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/searchDetailFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchDetailFragment"
-        android:label="搜索详情"></fragment>
+        android:label="搜索详情">
+        <argument
+            android:name="searchKey"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/treeDetailFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.TreeDetailFragment"
-        tools:layout="知识体系"></fragment>
+        tools:layout="知识体系">
+        <argument
+            android:name="data"
+            app:argType="cn.xpcheng.wanadnroidmvvm.data.bean.Tree" />
+        <argument
+            android:name="index"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.LoginFragment"
+        tools:layout="登录">
+
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.RegisterFragment"
+        tools:layout="注册" />
     <action
         android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_right" />
+        app:popExitAnim="@anim/slide_out_right">
+        <argument
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
+        <argument
+            android:name="url"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="isCollect"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+    </action>
+
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out" />
+
 </navigation>

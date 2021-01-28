@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="mainColor">@color/Light_Blue</color>
+    <color name="secondColor">@color/Orange</color>
+    <color name="colorOnMain">@color/white</color>
 
     <color name="light_red">#e26d2e</color>
     <color name="deep_red">#dc3b1f</color>

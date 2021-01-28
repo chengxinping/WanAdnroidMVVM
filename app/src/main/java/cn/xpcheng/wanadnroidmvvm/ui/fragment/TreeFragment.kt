@@ -3,22 +3,17 @@ package cn.xpcheng.wanadnroidmvvm.ui.fragment
 import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.data.bean.Tree
-import cn.xpcheng.wanadnroidmvvm.data.bean.TreeBean
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
-import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.TreeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.TreeViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
-import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -50,12 +45,12 @@ class TreeFragment : BaseFragment<TreeViewModel, LayoutRecyclerViewBinding>() {
     override fun getViewModel(): TreeViewModel = mViewModel
 
     override fun initView() {
-        recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
-        fab.setOnClickListener {
-            recycler.run {
+        mDataBinding.fab.setOnClickListener {
+            mDataBinding.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
@@ -65,7 +60,7 @@ class TreeFragment : BaseFragment<TreeViewModel, LayoutRecyclerViewBinding>() {
 
         }
 
-        swipe_refresh.run {
+        mDataBinding.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 mViewModel.getTree()
@@ -79,17 +74,14 @@ class TreeFragment : BaseFragment<TreeViewModel, LayoutRecyclerViewBinding>() {
 
     override fun createObserver() {
         mViewModel.tree.observe(viewLifecycleOwner, Observer {
-            swipe_refresh.isRefreshing = false
+            mDataBinding.swipeRefresh.isRefreshing = false
             mAdapter.setList(it)
         })
     }
 
     inner class ProxyClick {
         fun goToTreeDetail(data: Tree, index: Int) {
-            nav(R.id.action_mainFragment_to_treeDetailFragment, Bundle().apply {
-                putParcelable("data", data)
-                putInt("index", index)
-            })
+            nav(MainFragmentDirections.actionMainFragmentToTreeDetailFragment(data, index))
         }
     }
 }

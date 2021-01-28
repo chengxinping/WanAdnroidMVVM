@@ -6,20 +6,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
+import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.data.bean.WebViewData
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
-import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.ProjectAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.ProjectChildViewModel
-import cn.xpcheng.wanadnroidmvvm.viewmodel.WxChildViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
-import kotlinx.android.synthetic.main.layout_recycler_view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -65,7 +61,7 @@ class ProjectChildFragment : BaseFragment<ProjectChildViewModel, LayoutRecyclerV
     override fun getViewModel(): ProjectChildViewModel = mViewModel
 
     override fun initView() {
-        recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
         mAdapter.run {
@@ -75,27 +71,23 @@ class ProjectChildFragment : BaseFragment<ProjectChildViewModel, LayoutRecyclerV
             }
             setOnItemClickListener { _, _, position ->
 
-                nav(R.id.action_global_webViewFragment, Bundle().apply {
-                    putParcelable(
-                        Constant.KEY_WEB_VIEW_DATA, WebViewData(
-                            mData[position].id,
-                            mData[position].link,
-                            mData[position].title,
-                            mData[position].collect
-                        )
+                nav(
+                    NavigationDirections.actionGlobalWebViewFragment(
+                        mData[position].id, mData[position].link, mData[position].title,
+                        mData[position].collect
                     )
-                })
+                )
             }
         }
-        swipe_refresh.run {
+        mDataBinding.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 mViewModel.getProjectList(true, cid, isNew)
             }
         }
 
-        fab.setOnClickListener {
-            recycler.run {
+        mDataBinding.fab.setOnClickListener {
+            mDataBinding.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
@@ -119,7 +111,7 @@ class ProjectChildFragment : BaseFragment<ProjectChildViewModel, LayoutRecyclerV
         mViewModel.projectArticles.observe(viewLifecycleOwner, Observer {
 
             if (it.curPage == 1) {
-                swipe_refresh.isRefreshing = false
+                mDataBinding.swipeRefresh.isRefreshing = false
                 mAdapter.setList(it.datas)
             } else {
                 mAdapter.addData(it.datas)

@@ -128,3 +128,20 @@ data class Tree(
     val userControlSetTop: Boolean,
     val visible: Int
 ) : Parcelable
+
+@SuppressLint("ParcelCreator")
+@Parcelize
+data class UserInfo(
+    val admin: Boolean = false,
+    val chapterTops: List<String> = listOf(),
+    val collectIds: MutableList<String> = mutableListOf(),
+    val email: String = "",
+    val icon: String = "",
+    val coinCount: Int = 0,
+    val id: String = "",
+    val nickname: String = "",
+    val password: String = "",
+    val token: String = "",
+    val type: Int = 0,
+    val username: String = ""
+) : Parcelable

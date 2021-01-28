@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:foreground="?selectableItemBackground"
         android:onClick="@{()->click.goToTreeDetail(data,0)}"
-        app:cardBackgroundColor="@color/white"
+
         app:cardCornerRadius="@dimen/dp_4"
         app:cardElevation="@dimen/dp_4">
 

@@ -3,17 +3,14 @@ package cn.xpcheng.wanadnroidmvvm.ui.fragment
 import android.text.Html
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.navArgs
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.constant.Constant
-import cn.xpcheng.wanadnroidmvvm.data.bean.WebViewData
-import cn.xpcheng.wanadnroidmvvm.databinding.FragmentWebviewBindingImpl
+import cn.xpcheng.wanadnroidmvvm.databinding.FragmentWebviewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.initClose
 import cn.xpcheng.wanadnroidmvvm.ext.navigateBack
 import cn.xpcheng.wanadnroidmvvm.viewmodel.WebViewViewModel
 import com.just.agentweb.AgentWeb
-import kotlinx.android.synthetic.main.fragment_webview.*
-import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -22,7 +19,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *@desc
  */
 
-class  WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBindingImpl>() {
+class WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBinding>() {
+
+    private val args: WebViewFragmentArgs by navArgs()
+
     override fun getLayoutId(): Int = R.layout.fragment_webview
 
     private val mViewModel: WebViewViewModel by viewModel()
@@ -44,7 +44,7 @@ class  WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBindingIm
             })
 
         preWeb = AgentWeb.with(this)
-            .setAgentWebParent(webview_container, LinearLayout.LayoutParams(-1, -1))
+            .setAgentWebParent(mDataBinding.webViewContainer, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()
             .createAgentWeb()
             .ready()
@@ -52,16 +52,14 @@ class  WebViewFragment : BaseFragment<WebViewViewModel, FragmentWebviewBindingIm
 
     override fun initData() {
         super.initData()
-        arguments?.run {
-            getParcelable<WebViewData>(Constant.KEY_WEB_VIEW_DATA)?.let {
-                mViewModel.id = it.id
-                mViewModel.isCollect = it.isCollect
-                mViewModel.title = it.title
-                mViewModel.url = it.url
-            }
-        }
 
-        toolbar.run {
+        args.run {
+            mViewModel.id = id
+            mViewModel.isCollect = isCollect
+            mViewModel.title = title
+            mViewModel.url = url
+        }
+        mDataBinding.layoutToolbar.toolbar.run {
             mActivity.setSupportActionBar(this)
             initClose(Html.fromHtml(mViewModel.title).toString(), onBack = { onBack() })
         }

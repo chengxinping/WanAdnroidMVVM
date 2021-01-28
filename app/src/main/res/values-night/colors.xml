@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="mainColor">@color/Grey900</color>
+    <color name="secondColor">@color/Orange</color>
+    <color name="colorOnMain">@color/white</color>
+
     <color name="high_level_text_color">#b2b2b2</color>
     <color name="middle_level_text_color">#b3b3b3</color>
     <color name="flow_background">#23262e</color>
-
+    <color name="vertical_tab_layout_indicator_color">@color/Black</color>
+    <color name="vertical_tab_layout_bg">@color/Grey800</color>
 </resources>
