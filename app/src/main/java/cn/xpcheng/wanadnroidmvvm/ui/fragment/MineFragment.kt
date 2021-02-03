@@ -11,6 +11,8 @@ import cn.xpcheng.wanadnroidmvvm.ext.navOrLogin
 import cn.xpcheng.wanadnroidmvvm.utils.CacheUtil
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MineViewModel
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -49,7 +51,11 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
             })
 
             point.observe(viewLifecycleOwner, {
-                mDataBinding.tvMyPoint.text = it.coinCount.toString()
+                if (it != null) {
+                    mDataBinding.tvMyPoint.text = it.coinCount.toString()
+                } else {
+                    mDataBinding.tvMyPoint.text = ""
+                }
             })
         }
 
@@ -59,6 +65,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
                 mDataBinding.tvUserName.text = it.username
             } else {
                 mDataBinding.tvUserName.text = "去登陆"
+                mViewModel.point.value = null
             }
         })
     }
@@ -83,23 +90,37 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
 
         fun goToLogin() {
             if (CacheUtil.isLogin()) {
-                nav(R.id.action_global_loginFragment)
+                MaterialDialog(mActivity)
+                    .cancelable(true)
+                    .cancelOnTouchOutside(true)
+                    .lifecycleOwner(mActivity)
+                    .show {
+                        title(text = "确认退出登录？")
+                        positiveButton(text = "确定") {
+                            mViewModel.logout()
+                        }
+                        negativeButton(text = "取消") {
+                            dismiss()
+                        }
+                    }
             } else {
-                //退出登录
-                mViewModel.logout()
+                nav(R.id.action_global_loginFragment)
             }
         }
 
         fun goToMyPoints() {
             mViewModel.point.value?.let {
-                navOrLogin(
+                nav(
                     MainFragmentDirections.actionMainFragmentToPointFragment(
                         it.rank,
                         it.username,
                         it.coinCount
                     )
                 )
-            }
+            } ?: nav(
+                MainFragmentDirections.actionMainFragmentToPointFragment()
+            )
+
         }
 
         fun goToMyCollects() {

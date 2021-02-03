@@ -1,6 +1,7 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import android.content.Context
+import android.view.View
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
@@ -75,9 +76,14 @@ class PointFragment : BaseFragment<PointViewModel, FragmentPointBinding>() {
                     true
                 }
             }
-            tvMyRank.text = args.rank
-            tvMyName.text = args.userName
-            tvMyCoinCount.text = args.coinCount.toString()
+            if (args.rank.isNotBlank()) {
+                myInfo.visibility = View.VISIBLE
+                tvMyRank.text = args.rank
+                tvMyName.text = args.userName
+                tvMyCoinCount.text = args.coinCount.toString()
+            }else{
+                myInfo.visibility = View.GONE
+            }
         }
 
         mDataBinding.layoutRecycler.recycler.init(mLinearLayoutManager, mAdapter).run {
