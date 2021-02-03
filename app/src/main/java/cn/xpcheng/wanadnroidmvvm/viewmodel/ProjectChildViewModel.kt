@@ -5,7 +5,8 @@ import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
 import cn.xpcheng.mvvm_core.base.viewmodel.ErrorState
 import cn.xpcheng.mvvm_core.base.viewmodel.LoadingState
 import cn.xpcheng.mvvm_core.base.viewmodel.SuccessState
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.PageInfo
 import cn.xpcheng.wanadnroidmvvm.repository.ProjectChildRepository
 
 /**
@@ -19,23 +20,19 @@ class ProjectChildViewModel(private val projectChildRepository: ProjectChildRepo
     //由于最新项目列表和项目列表分页不一样  最新项目从0开始   项目从1开始
     var page = 1
 
-    var projectArticles = MutableLiveData<ArticleBody>()
+    var projectArticles = MutableLiveData<PageInfo<Article>>()
 
 
     fun getProjectList(isRefresh: Boolean, cid: Int, isNew: Boolean = false) {
-        mStateLiveData.postValue(LoadingState)
+
         if (isRefresh)
             page = if (isNew) 0 else 1
         launch({ projectChildRepository.getProjectArticles(page, cid, isNew) },
-            isShowLoading = true,
+            isShowLoading = false,
             isSpecialError = true,
             success = {
                 page++
-                mStateLiveData.postValue(SuccessState)
                 projectArticles.postValue(it)
-            },
-            error = {
-                mStateLiveData.postValue(ErrorState(it))
             })
     }
 }

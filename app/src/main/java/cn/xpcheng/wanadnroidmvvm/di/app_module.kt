@@ -33,6 +33,7 @@ val viewModelModule = module {
     viewModel { TreeArticleViewModel(get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+    viewModel { PointViewModel(get()) }
 }
 
 val responseModule = module {
@@ -52,6 +53,7 @@ val responseModule = module {
     factory { LoginRepository(get()) }
     factory { RegisterRepository(get()) }
     factory { MineRepository(get()) }
+    factory { PointRepository(get()) }
 }
 
 val apiModule = module {

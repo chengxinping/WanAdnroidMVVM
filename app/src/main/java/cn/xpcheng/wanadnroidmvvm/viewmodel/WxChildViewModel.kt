@@ -2,7 +2,8 @@ package cn.xpcheng.wanadnroidmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.PageInfo
 import cn.xpcheng.wanadnroidmvvm.repository.WxChildRepository
 
 /**
@@ -13,9 +14,9 @@ import cn.xpcheng.wanadnroidmvvm.repository.WxChildRepository
 class WxChildViewModel(private val wxChildRepository: WxChildRepository) :
     BaseViewModel() {
 
-    var wxArticle = MutableLiveData<ArticleBody>()
+    var wxArticle = MutableLiveData<PageInfo<Article>>()
 
     fun getWxArticle(cid: Int, page: Int) {
-        launch({ wxChildRepository.getWxArticle(cid, page) }, wxArticle, true)
+        launch({ wxChildRepository.getWxArticle(cid, page) }, wxArticle, false)
     }
 }

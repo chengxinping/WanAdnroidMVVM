@@ -10,9 +10,12 @@ import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentNavigationBinding
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.NavigationAdapter
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.NavigationTagAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.NavigationViewModel
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
@@ -39,6 +42,7 @@ class NavigationFragment : BaseFragment<NavigationViewModel, FragmentNavigationB
     private var isClick = false
     private var mTabCurrentPosition: Int = 0
 
+    private lateinit var mUiStatusController: UiStatusController
 
     override fun initView() {
         mDataBinding.verticalTabLayoutNavigation.addOnTabSelectedListener(object :
@@ -54,6 +58,12 @@ class NavigationFragment : BaseFragment<NavigationViewModel, FragmentNavigationB
             }
 
         })
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.container)
+
+        onReload(mUiStatusController) {
+            mViewModel.getNavigationList()
+        }
 
         mDataBinding.recyclerNavigation.run {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -128,6 +138,7 @@ class NavigationFragment : BaseFragment<NavigationViewModel, FragmentNavigationB
                 setHasFixedSize(true)
                 adapter = NavigationAdapter(it.toMutableList(), ProxyClick())
             }
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
         })
     }
 

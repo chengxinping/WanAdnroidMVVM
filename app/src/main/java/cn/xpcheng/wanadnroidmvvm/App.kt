@@ -3,6 +3,8 @@ package cn.xpcheng.wanadnroidmvvm
 import android.app.Application
 import android.content.Context
 import cn.xpcheng.wanadnroidmvvm.di.appModule
+import com.fengchen.uistatus.UiStatusManager
+import com.fengchen.uistatus.annotation.UiStatus
 import com.tencent.mmkv.MMKV
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -30,5 +32,7 @@ class App : Application() {
             modules(appModule)
         }
 
+        UiStatusManager.getInstance()
+            .addUiStatusConfig(UiStatus.LOADING, R.layout.layout_loading)
     }
 }

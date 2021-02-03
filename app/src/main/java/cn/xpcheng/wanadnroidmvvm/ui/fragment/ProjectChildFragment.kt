@@ -13,9 +13,12 @@ import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.ProjectAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.ProjectChildViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -60,7 +63,17 @@ class ProjectChildFragment : BaseFragment<ProjectChildViewModel, LayoutRecyclerV
 
     override fun getViewModel(): ProjectChildViewModel = mViewModel
 
+
+    private lateinit var mUiStatusController: UiStatusController
+
     override fun initView() {
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            mViewModel.getProjectList(true, cid, isNew)
+        }
+
         mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
@@ -116,7 +129,7 @@ class ProjectChildFragment : BaseFragment<ProjectChildViewModel, LayoutRecyclerV
             } else {
                 mAdapter.addData(it.datas)
             }
-
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
             mAdapter.loadMoreModule.run {
                 if (it.over)
                     loadMoreEnd()

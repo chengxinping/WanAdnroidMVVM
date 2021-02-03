@@ -12,9 +12,12 @@ import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.QuestionViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -47,10 +50,21 @@ class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBindi
 
     override fun getViewModel(): QuestionViewModel = mViewModel
 
+    private lateinit var mUiStatusController: UiStatusController
+
     override fun initView() {
         mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            page = 1
+            mViewModel.getQuestionList(page)
+        }
+
+
         mAdapter.run {
 
             loadMoreModule.setOnLoadMoreListener {
@@ -94,7 +108,7 @@ class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBindi
     override fun createObserver() {
         mViewModel.questionList.observe(viewLifecycleOwner, Observer {
             page++
-
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
             if (it.curPage == 1) {
                 mDataBinding.swipeRefresh.isRefreshing = false
                 mAdapter.setList(it.datas)

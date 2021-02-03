@@ -1,6 +1,5 @@
 package cn.xpcheng.wanadnroidmvvm.repository
 
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
 import cn.xpcheng.wanadnroidmvvm.data.bean.Banner
 import cn.xpcheng.wanadnroidmvvm.data.bean.BaseApiResponse
 import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApi
@@ -14,7 +13,7 @@ import kotlinx.coroutines.withContext
  *@desc
  */
 class HomeRepository(private val wanAndroidApi: WanAndroidApi) {
-    suspend fun getHomeData(page: Int): BaseApiResponse<ArticleBody> = withContext(Dispatchers.IO) {
+    suspend fun getHomeData(page: Int) = withContext(Dispatchers.IO) {
         val data = async { wanAndroidApi.getArticlesList(page) }
         //第一页时才拉置顶文章
         if (page == 0) {

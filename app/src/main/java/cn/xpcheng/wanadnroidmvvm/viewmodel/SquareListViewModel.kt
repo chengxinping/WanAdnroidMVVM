@@ -2,8 +2,8 @@ package cn.xpcheng.wanadnroidmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
-import cn.xpcheng.wanadnroidmvvm.repository.QuestionRepository
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.PageInfo
 import cn.xpcheng.wanadnroidmvvm.repository.SquareListRepository
 
 /**
@@ -13,9 +13,9 @@ import cn.xpcheng.wanadnroidmvvm.repository.SquareListRepository
  */
 class SquareListViewModel(private val squareListRepository: SquareListRepository) :
     BaseViewModel() {
-    var squareList = MutableLiveData<ArticleBody>()
+    var squareList = MutableLiveData<PageInfo<Article>>()
 
     fun getSquareList(page: Int) {
-        launch({ squareListRepository.getSquareList(page) }, squareList, true)
+        launch({ squareListRepository.getSquareList(page) }, squareList, false)
     }
 }

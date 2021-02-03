@@ -58,6 +58,7 @@ class TreeDetailFragment : BaseFragment<EmptyViewModel, FragmentTreeDetailBindin
                 override fun createFragment(position: Int): Fragment = mFragments[position]
 
             }
+            offscreenPageLimit = mFragments.size
         }
 
         TabLayoutMediator(

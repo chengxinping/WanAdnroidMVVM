@@ -26,7 +26,7 @@ interface WanAndroidApi {
      *
      */
     @GET("article/list/{page}/json")
-    suspend fun getArticlesList(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+    suspend fun getArticlesList(@Path("page") page: Int): BaseApiResponse<PageInfo<Article>>
 
     /**
      * 搜索
@@ -37,7 +37,7 @@ interface WanAndroidApi {
     suspend fun search(
         @Path("page") page: Int,
         @Field("k") key: String
-    ): BaseApiResponse<ArticleBody>
+    ): BaseApiResponse<PageInfo<Article>>
 
     @GET("hotkey/json")
     suspend fun getHotKeys(): BaseApiResponse<List<HotKey>>
@@ -56,7 +56,7 @@ interface WanAndroidApi {
     suspend fun getWxArticle(
         @Path("cid") cid: Int,
         @Path("page") page: Int
-    ): BaseApiResponse<ArticleBody>
+    ): BaseApiResponse<PageInfo<Article>>
 
     /**
      *项目分类
@@ -73,28 +73,28 @@ interface WanAndroidApi {
     suspend fun getProjectArticle(
         @Path("page") page: Int,
         @Query("cid") cid: Int
-    ): BaseApiResponse<ArticleBody>
+    ): BaseApiResponse<PageInfo<Article>>
 
     /**
      * 最新项目
      * @param page 分页数据 从0开始
      */
     @GET("article/listproject/{page}/json")
-    suspend fun getRecentlyProjects(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+    suspend fun getRecentlyProjects(@Path("page") page: Int): BaseApiResponse<PageInfo<Article>>
 
     /**
      * 问答列表
      *  @param page 每日一问的页码从1开始
      */
     @GET("wenda/list/{page}/json")
-    suspend fun getQuestionList(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+    suspend fun getQuestionList(@Path("page") page: Int): BaseApiResponse<PageInfo<Article>>
 
     /**
      * 广场列表
      * @param page 每日一问的页码从0开始
      */
     @GET("user_article/list/{page}/json")
-    suspend fun getSquareList(@Path("page") page: Int): BaseApiResponse<ArticleBody>
+    suspend fun getSquareList(@Path("page") page: Int): BaseApiResponse<PageInfo<Article>>
 
     /**
      * 导航数据
@@ -110,7 +110,7 @@ interface WanAndroidApi {
     suspend fun getTreeArticle(
         @Path("page") page: Int,
         @Query("cid") cid: Int
-    ): BaseApiResponse<ArticleBody>
+    ): BaseApiResponse<PageInfo<Article>>
 
 
     @FormUrlEncoded
@@ -133,4 +133,17 @@ interface WanAndroidApi {
 
     @GET("user/logout/json")
     suspend fun logout(): BaseApiResponse<String>
+
+    @GET("lg/coin/userinfo/json")
+    suspend fun getMyPoint(): BaseApiResponse<Point>
+
+    @GET("coin/rank/{page}/json")
+    suspend fun getRankList(@Path("page") page: Int): BaseApiResponse<PageInfo<Point>>
+
+    /**
+     * 个人积分详细列表
+     */
+    @GET("lg/coin/list/{page}/json")
+    suspend fun getMyPointDetail(@Path("page") page: Int): BaseApiResponse<PageInfo<PointDetail>>
+
 }

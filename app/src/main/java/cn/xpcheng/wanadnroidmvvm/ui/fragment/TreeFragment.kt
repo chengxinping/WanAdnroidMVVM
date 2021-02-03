@@ -11,9 +11,12 @@ import cn.xpcheng.wanadnroidmvvm.data.bean.Tree
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.TreeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.TreeViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -44,7 +47,16 @@ class TreeFragment : BaseFragment<TreeViewModel, LayoutRecyclerViewBinding>() {
 
     override fun getViewModel(): TreeViewModel = mViewModel
 
+    private lateinit var mUiStatusController: UiStatusController
+
     override fun initView() {
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            mViewModel.getTree()
+        }
+
         mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
@@ -76,6 +88,7 @@ class TreeFragment : BaseFragment<TreeViewModel, LayoutRecyclerViewBinding>() {
         mViewModel.tree.observe(viewLifecycleOwner, Observer {
             mDataBinding.swipeRefresh.isRefreshing = false
             mAdapter.setList(it)
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
         })
     }
 

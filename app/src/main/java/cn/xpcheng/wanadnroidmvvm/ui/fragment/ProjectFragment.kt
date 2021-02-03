@@ -8,6 +8,8 @@ import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.ProjectViewModel
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,8 +25,10 @@ class ProjectFragment : BaseFragment<ProjectViewModel, LayoutTablayoutBinding>()
 
     override fun getViewModel(): ProjectViewModel = mViewModel
 
-    override fun initView() {
+    private lateinit var mUiStatusController: UiStatusController
 
+    override fun initView() {
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.viewPager)
     }
 
     override fun createObserver() {
@@ -48,6 +52,7 @@ class ProjectFragment : BaseFragment<ProjectViewModel, LayoutTablayoutBinding>()
             ) { tab, position ->
                 tab.text = Html.fromHtml(it[position].name)
             }.attach()
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
         })
     }
 

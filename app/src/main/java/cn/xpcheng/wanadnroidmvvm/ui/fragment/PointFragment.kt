@@ -1,7 +1,6 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
 import android.content.Context
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
@@ -9,11 +8,11 @@ import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.databinding.FragmentSearchDetailBinding
+import cn.xpcheng.wanadnroidmvvm.data.bean.Point
+import cn.xpcheng.wanadnroidmvvm.databinding.FragmentPointBinding
 import cn.xpcheng.wanadnroidmvvm.ext.*
-import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
-import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchDetailViewModel
+import cn.xpcheng.wanadnroidmvvm.ui.adapter.RankAdapter
+import cn.xpcheng.wanadnroidmvvm.viewmodel.PointViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -21,82 +20,94 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author ChengXinPing
- * @time   2020/10/9 9:47
+ * @time   2021/2/1 14:19
  *
  */
-class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentSearchDetailBinding>() {
+class PointFragment : BaseFragment<PointViewModel, FragmentPointBinding>() {
 
-    private var page = 0
+    private val mViewModel: PointViewModel by viewModel()
 
-    private val args: SearchDetailFragmentArgs by navArgs()
+    private val args: PointFragmentArgs by navArgs()
 
-    private val mViewModel: SearchDetailViewModel by viewModel()
+    override fun getLayoutId(): Int = R.layout.fragment_point
+
+    override fun getViewModel(): PointViewModel = mViewModel
 
     private val mLinearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(activity)
     }
+
+    private var page = 1
 
     //RecyclerView分割线
     private val mSpaceItemDecoration: SpaceItemDecoration by lazy {
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Article>()
+    private val mData = mutableListOf<Point>()
 
-    private val mAdapter: HomeAdapter by lazy {
-        HomeAdapter(mData)
+    private val mAdapter: RankAdapter by lazy {
+        RankAdapter(mData)
     }
 
     private lateinit var mUiStatusController: UiStatusController
 
-
-    override fun getLayoutId(): Int = R.layout.fragment_search_detail
-
-    override fun getViewModel(): SearchDetailViewModel = mViewModel
-
     override fun initView() {
+        mDataBinding.run {
+            layoutToolbar.toolbar.run {
+                initClose("积分排行") { navigateBack() }
+                inflateMenu(R.menu.menu_rank)
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.menu_help -> {
+                            nav(
+                                NavigationDirections.actionGlobalWebViewFragment(
+                                    -1,
+                                    "https://www.wanandroid.com/blog/show/2653",
+                                    "积分规则",
+                                    false
+                                )
+                            )
+                        }
+                        R.menu.menu_rank -> {
+                        }
+                    }
+                    true
+                }
+            }
+            tvMyRank.text = args.rank
+            tvMyName.text = args.userName
+            tvMyCoinCount.text = args.coinCount.toString()
+        }
 
-        mDataBinding.layoutToolbar.toolbar.initClose(args.searchKey, onBack = {
-            navigateBack()
-        })
-
-        mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.layoutRecycler.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
-        mUiStatusController = UiStatusController.get().bind(mDataBinding.recyclerView.swipeRefresh)
+        mUiStatusController =
+            UiStatusController.get().bind(mDataBinding.layoutRecycler.swipeRefresh)
 
         onReload(mUiStatusController) {
-            page = 0
-            mViewModel.search(args.searchKey, page)
+            page = 1
+            mViewModel.getRankList(page)
         }
 
         mAdapter.run {
-
             loadMoreModule.setOnLoadMoreListener {
-                mViewModel.search(args.searchKey, page)
-            }
-            setOnItemClickListener { _, _, position ->
-
-                nav(
-                    NavigationDirections.actionGlobalWebViewFragment(
-                        mData[position].id, mData[position].link, mData[position].title,
-                        mData[position].collect
-                    )
-                )
+                mViewModel.getRankList(page)
             }
         }
 
-        mDataBinding.recyclerView.swipeRefresh.run {
+        mDataBinding.layoutRecycler.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
-                page = 0
-                mViewModel.search(args.searchKey, page)
+                page = 1
+                mViewModel.getRankList(page)
             }
         }
 
-        mDataBinding.recyclerView.fab.setOnClickListener {
-            mDataBinding.recyclerView.recycler.run {
+        mDataBinding.layoutRecycler.fab.setOnClickListener {
+            mDataBinding.layoutRecycler.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
@@ -104,18 +115,19 @@ class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentSearchD
                 }
             }
         }
-
     }
 
+
     override fun lazyLoadData() {
-        mViewModel.search(args.searchKey, page)
+        page = 1
+        mViewModel.getRankList(page)
     }
 
     override fun createObserver() {
-        mViewModel.searchResult.observe(viewLifecycleOwner, Observer {
+        mViewModel.rankList.observe(viewLifecycleOwner, {
             page++
             if (it.curPage == 1) {
-                mDataBinding.recyclerView.swipeRefresh.isRefreshing = false
+                mDataBinding.layoutRecycler.swipeRefresh.isRefreshing = false
                 if (it.datas.isNotEmpty()) {
                     mUiStatusController.changeUiStatus(UiStatus.CONTENT)
                     mAdapter.setList(it.datas)

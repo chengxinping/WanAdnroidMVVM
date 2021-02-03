@@ -13,9 +13,12 @@ import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.WxChildViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -60,7 +63,18 @@ class WxChildFragment : BaseFragment<WxChildViewModel, LayoutRecyclerViewBinding
 
     override fun getViewModel(): WxChildViewModel = mViewModel
 
+
+    private lateinit var mUiStatusController: UiStatusController
+
     override fun initView() {
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            page = 1
+            mViewModel.getWxArticle(cid, page)
+        }
+
         mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
@@ -117,6 +131,8 @@ class WxChildFragment : BaseFragment<WxChildViewModel, LayoutRecyclerViewBinding
             } else {
                 mAdapter.addData(it.datas)
             }
+
+            mUiStatusController.changeUiStatusIgnore(UiStatus.CONTENT)
 
             mAdapter.loadMoreModule.run {
                 if (it.over)

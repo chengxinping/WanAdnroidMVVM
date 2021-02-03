@@ -15,6 +15,6 @@ class TreeViewModel(private val mRepository: TreeRepository) : BaseViewModel() {
     val tree = MutableLiveData<List<Tree>>()
 
     fun getTree() {
-        launch({ mRepository.getTree() }, tree, true)
+        launch({ mRepository.getTree() }, tree, false)
     }
 }

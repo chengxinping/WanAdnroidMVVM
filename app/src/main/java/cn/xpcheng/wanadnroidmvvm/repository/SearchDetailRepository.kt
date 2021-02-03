@@ -1,7 +1,8 @@
 package cn.xpcheng.wanadnroidmvvm.repository
 
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.data.bean.BaseApiResponse
+import cn.xpcheng.wanadnroidmvvm.data.bean.PageInfo
 import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApi
 
 /**
@@ -10,6 +11,6 @@ import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApi
  *
  */
 class SearchDetailRepository(private val wanAndroidApi: WanAndroidApi) {
-    suspend fun search(key: String, page: Int): BaseApiResponse<ArticleBody> =
+    suspend fun search(key: String, page: Int): BaseApiResponse<PageInfo<Article>> =
         wanAndroidApi.search(page, key)
 }

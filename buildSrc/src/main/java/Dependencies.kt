@@ -36,7 +36,10 @@ object Versions {
     const val verticalTabLayout = "1.2.5"
 
     const val mmkv = "1.2.7"
-    const val moshiKtx = "1.11.0"
+
+    const val dialog = "3.3.0"
+
+    const val uiStatus = "1.0.5"
 }
 
 object BuildVersions {
@@ -118,5 +121,8 @@ object Dependencies {
 
     const val mmkv = "com.tencent:mmkv-static:${Versions.mmkv}"
 
-    const val moshiKtx = "com.squareup.moshi:moshi-kotlin:${Versions.moshiKtx}"
+    const val uiStatus = "com.github.FengChenSunshine:UiStatus:${Versions.uiStatus}"
+
+    const val dialogCore = "com.afollestad.material-dialogs:core:${Versions.dialog}"
+    const val dialogLifecycle = "com.afollestad.material-dialogs:lifecycle:${Versions.dialog}"
 }

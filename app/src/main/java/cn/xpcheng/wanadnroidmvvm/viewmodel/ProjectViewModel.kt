@@ -20,7 +20,7 @@ class ProjectViewModel(private val projectRepository: ProjectRepository) : BaseV
     fun getProjectTree() {
         launch(
             { projectRepository.getProjectTree() },
-            isShowLoading = true,
+            isShowLoading = false,
             isSpecialError = true,
             success = {
                 val recentlyBean = TreeBean(mutableListOf(), -1, -1, "最新项目", -1, -1, false, -1)

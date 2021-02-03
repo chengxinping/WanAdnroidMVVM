@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/layout_toolbar" />
+
+        <include
+            android:id="@+id/layout_recycler"
+            layout="@layout/layout_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/my_info"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar" />
+
+        <androidx.cardview.widget.CardView
+            app:cardBackgroundColor="@color/Blue_Grey"
+            android:id="@+id/my_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="1dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <TextView
+                    android:id="@+id/tv_my_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:textColor="@color/secondColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="100" />
+
+                <TextView
+                    android:id="@+id/tv_my_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toLeftOf="@id/tv_my_coin_count"
+                    android:layout_toRightOf="@id/tv_my_rank"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/secondColor"
+                    android:textSize="16sp"
+
+                    tools:text="一七" />
+
+                <TextView
+                    android:id="@+id/tv_my_coin_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:textColor="@color/secondColor"
+                    android:textSize="16sp"
+                    tools:text="21" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -9,4 +9,6 @@ import cn.xpcheng.wanadnroidmvvm.data.http.WanAndroidApi
  */
 class MineRepository(private val api: WanAndroidApi) {
     suspend fun logout() = api.logout()
+
+    suspend fun getMyPoint() = api.getMyPoint()
 }

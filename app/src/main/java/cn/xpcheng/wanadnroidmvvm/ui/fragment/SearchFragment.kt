@@ -1,6 +1,5 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.ImageView
@@ -11,13 +10,14 @@ import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.data.bean.SearchHistoryKey
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentSearchBinding
-import cn.xpcheng.wanadnroidmvvm.ext.init
-import cn.xpcheng.wanadnroidmvvm.ext.initClose
-import cn.xpcheng.wanadnroidmvvm.ext.nav
-import cn.xpcheng.wanadnroidmvvm.ext.navigateBack
+import cn.xpcheng.wanadnroidmvvm.ext.*
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HistorySearchAdapter
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HotKeyAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchViewModel
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -37,7 +37,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
     }
 
     private val mHistoryAdapter: HistorySearchAdapter by lazy {
-        HistorySearchAdapter(arrayListOf(), mViewModel)
+        HistorySearchAdapter(arrayListOf(), Proxy())
     }
 
     private val mLinearLayoutManager: LinearLayoutManager by lazy {
@@ -49,12 +49,21 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
 
     override fun getViewModel(): SearchViewModel = mViewModel
 
+    private lateinit var mUiStatusController: UiStatusController
+
     override fun initView() {
         mDataBinding.viewModel = mViewModel
+        mDataBinding.click = Proxy()
         setHasOptionsMenu(true)
         mDataBinding.layoutToolbar.toolbar.run {
             mActivity.setSupportActionBar(this)
             initClose { navigateBack() }
+        }
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.container)
+
+        onReload(mUiStatusController) {
+            mViewModel.getHotKey()
         }
 
         val flexLayoutManager = FlexboxLayoutManager(context)
@@ -93,6 +102,7 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
     override fun createObserver() {
         mViewModel.run {
             hotKeys.observe(viewLifecycleOwner, Observer {
+                mUiStatusController.changeUiStatus(UiStatus.CONTENT)
                 mHotKeyAdapter.setList(it)
             })
 
@@ -151,6 +161,28 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
                 it.add(0, history)
                 historyKeys.postValue(it)
             }
+        }
+    }
+
+    inner class Proxy() {
+        fun deleteAll() {
+            MaterialDialog(mActivity)
+                .cancelable(true)
+                .cancelOnTouchOutside(true)
+                .lifecycleOwner(mActivity)
+                .show {
+                    title(text = "确认删除全部历史记录？")
+                    positiveButton(text = "确定") {
+                        mViewModel.deleteAllHistory()
+                    }
+                    negativeButton(text = "取消") {
+                        dismiss()
+                    }
+                }
+        }
+
+        fun deleteHistory(searchHistoryKey: SearchHistoryKey) {
+            mViewModel.deleteHistory(searchHistoryKey)
         }
     }
 }

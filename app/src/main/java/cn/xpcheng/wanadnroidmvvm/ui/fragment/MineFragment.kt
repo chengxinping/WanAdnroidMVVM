@@ -1,15 +1,13 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
-import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.constant.Constant
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentMineBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.navOrLogin
 import cn.xpcheng.wanadnroidmvvm.utils.CacheUtil
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MineViewModel
@@ -34,17 +32,30 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         mDataBinding.click = ProxyClick()
     }
 
+    override fun lazyLoadData() {
+        if (CacheUtil.isLogin()) {
+            mViewModel.getMyPoint()
+        }
+    }
+
     override fun createObserver() {
 
-        mViewModel.isLogoutSuccess.observe(viewLifecycleOwner, {
-            if (it) {
-                CacheUtil.saveUserInfo(null)
-                mActivityViewModel.userInfo.value = null
-            }
-        })
+        mViewModel.run {
+            isLogoutSuccess.observe(viewLifecycleOwner, {
+                if (it) {
+                    CacheUtil.saveUserInfo(null)
+                    mActivityViewModel.userInfo.value = null
+                }
+            })
+
+            point.observe(viewLifecycleOwner, {
+                mDataBinding.tvMyPoint.text = it.coinCount.toString()
+            })
+        }
 
         mActivityViewModel.userInfo.observe(viewLifecycleOwner, {
             if (it != null) {
+                mViewModel.getMyPoint()
                 mDataBinding.tvUserName.text = it.username
             } else {
                 mDataBinding.tvUserName.text = "去登陆"
@@ -52,9 +63,6 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         })
     }
 
-    override fun lazyLoadData() {
-
-    }
 
     inner class ProxyClick {
         fun goToSetting() {
@@ -74,7 +82,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         }
 
         fun goToLogin() {
-            if (mActivityViewModel.userInfo.value == null) {
+            if (CacheUtil.isLogin()) {
                 nav(R.id.action_global_loginFragment)
             } else {
                 //退出登录
@@ -83,7 +91,15 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         }
 
         fun goToMyPoints() {
-
+            mViewModel.point.value?.let {
+                navOrLogin(
+                    MainFragmentDirections.actionMainFragmentToPointFragment(
+                        it.rank,
+                        it.username,
+                        it.coinCount
+                    )
+                )
+            }
         }
 
         fun goToMyCollects() {

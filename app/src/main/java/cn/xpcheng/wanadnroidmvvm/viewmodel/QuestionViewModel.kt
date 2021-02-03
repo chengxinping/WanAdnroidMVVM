@@ -2,7 +2,8 @@ package cn.xpcheng.wanadnroidmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.PageInfo
 import cn.xpcheng.wanadnroidmvvm.repository.QuestionRepository
 
 /**
@@ -11,9 +12,9 @@ import cn.xpcheng.wanadnroidmvvm.repository.QuestionRepository
  *
  */
 class QuestionViewModel(private val questionRepository: QuestionRepository) : BaseViewModel() {
-    var questionList = MutableLiveData<ArticleBody>()
+    var questionList = MutableLiveData<PageInfo<Article>>()
 
     fun getQuestionList(page: Int) {
-        launch({ questionRepository.getQuestionList(page) }, questionList, true)
+        launch({ questionRepository.getQuestionList(page) }, questionList, false)
     }
 }

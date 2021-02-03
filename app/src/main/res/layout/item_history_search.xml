@@ -10,8 +10,8 @@
             type="cn.xpcheng.wanadnroidmvvm.data.bean.SearchHistoryKey" />
 
         <variable
-            name="viewModel"
-            type="cn.xpcheng.wanadnroidmvvm.viewmodel.SearchViewModel" />
+            name="click"
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment.Proxy" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:foreground="?selectableItemBackground"
-            android:onClick="@{()->viewModel.deleteHistory(data)}"
+            android:onClick="@{()->click.deleteHistory(data)}"
             android:padding="5dp"
             android:src="@drawable/ic_delete_all"
             app:layout_constraintBottom_toBottomOf="parent"

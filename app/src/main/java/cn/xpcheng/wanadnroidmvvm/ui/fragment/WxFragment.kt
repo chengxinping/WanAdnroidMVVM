@@ -8,6 +8,8 @@ import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
 import cn.xpcheng.wanadnroidmvvm.viewmodel.WxViewModel
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,8 +26,10 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
 
     override fun getViewModel(): WxViewModel = mViewModel
 
-    override fun initView() {
+    private lateinit var mUiStatusController: UiStatusController
 
+    override fun initView() {
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.viewPager)
     }
 
     override fun createObserver() {
@@ -46,7 +50,8 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
             TabLayoutMediator(
                 mDataBinding.tabLayout,
                 mDataBinding.viewPager
-            ) { tab, position -> tab.text = Html.fromHtml(it[position].name) }.attach();
+            ) { tab, position -> tab.text = Html.fromHtml(it[position].name) }.attach()
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
         })
     }
 

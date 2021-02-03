@@ -12,6 +12,9 @@ object CacheUtil {
     fun saveUserInfo(userInfo: UserInfo?) {
         val kv = MMKV.defaultMMKV()!!
         kv.encode("user", userInfo)
+        userInfo?.let {
+            setIsLogin(true)
+        } ?: setIsLogin(false)
     }
 
     fun getUserInfo(): UserInfo? {
@@ -19,5 +22,19 @@ object CacheUtil {
         return kv.decodeParcelable("user", UserInfo::class.java)
     }
 
+    /**
+     * 是否已经登录
+     */
+    fun isLogin(): Boolean {
+        val kv = MMKV.defaultMMKV()!!
+        return kv.decodeBool("login", false)
+    }
 
+    /**
+     * 设置是否已经登录
+     */
+    private fun setIsLogin(isLogin: Boolean) {
+        val kv = MMKV.defaultMMKV()!!
+        kv.encode("login", isLogin)
+    }
 }

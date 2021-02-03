@@ -9,6 +9,7 @@
         android:id="@+id/mainFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.MainFragment"
         android:label="首页">
+
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
             app:destination="@id/searchFragment"
@@ -31,6 +32,27 @@
                 android:name="index"
                 android:defaultValue="0"
                 app:argType="integer" />
+        </action>
+
+        <action
+            android:id="@+id/action_mainFragment_to_pointFragment"
+            app:destination="@id/pointFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="rank"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="userName"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="coinCount"
+                android:defaultValue="0L"
+                app:argType="long" />
         </action>
     </fragment>
 
@@ -113,10 +135,30 @@
             app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
+
     <fragment
         android:id="@+id/registerFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.RegisterFragment"
         tools:layout="注册" />
+
+    <fragment
+        android:id="@+id/pointFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.PointFragment"
+        android:label="我的积分">
+        <argument
+            android:name="rank"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="userName"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="coinCount"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
+
     <action
         android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"

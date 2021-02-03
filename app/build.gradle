@@ -56,6 +56,10 @@ dependencies {
 
     implementation Dependencies.autoSize
 
+    implementation Dependencies.uiStatus
+    implementation Dependencies.dialogCore
+    implementation Dependencies.dialogLifecycle
+
 
     implementation Dependencies.navigation
     implementation Dependencies.navigationFragment
@@ -88,7 +92,7 @@ dependencies {
 
     implementation Dependencies.verticalTabLayout
 
-   implementation Dependencies.mmkv
+    implementation Dependencies.mmkv
 
 //    implementation Dependencies.moshiKtx
 

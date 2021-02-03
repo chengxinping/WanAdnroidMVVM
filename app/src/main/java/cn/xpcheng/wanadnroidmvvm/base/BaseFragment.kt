@@ -6,7 +6,9 @@ import cn.xpcheng.common.utils.toast
 import cn.xpcheng.mvvm_core.base.fragment.BaseVmDbFragment
 import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
+import cn.xpcheng.wanadnroidmvvm.ext.dismissLoadingExt
 import cn.xpcheng.wanadnroidmvvm.ext.hideSoftKeyboard
+import cn.xpcheng.wanadnroidmvvm.ext.showLoadingExt
 
 /**
  * @author ChengXinPing
@@ -17,10 +19,12 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
 
     override fun showLoading() {
         super.showLoading()
+        showLoadingExt()
     }
 
     override fun hideLoading() {
         super.hideLoading()
+        dismissLoadingExt()
     }
 
     override fun onPause() {

@@ -16,6 +16,6 @@ class NavigationViewModel(private val navigationRepository: NavigationRepository
     val navigationList = MutableLiveData<List<NavigationBean>>()
 
     fun getNavigationList() {
-        launch({ navigationRepository.getNavigation() }, navigationList, true)
+        launch({ navigationRepository.getNavigation() }, navigationList, false)
     }
 }

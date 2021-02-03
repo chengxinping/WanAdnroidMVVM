@@ -100,7 +100,7 @@
                         android:id="@+id/tv_my_point"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/mainColor"
+                        android:textColor="@color/secondColor"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         tools:text="100" />

@@ -40,9 +40,9 @@ data class Banner(
 )
 
 //文章列表
-data class ArticleBody(
+data class PageInfo<T>(
     val curPage: Int,
-    val datas: MutableList<Article>,
+    val datas: MutableList<T>,
     val offset: Int,
     val over: Boolean,
     val pageCount: Int,
@@ -145,3 +145,23 @@ data class UserInfo(
     val type: Int = 0,
     val username: String = ""
 ) : Parcelable
+
+data class Point(
+    val coinCount: Long,
+    val level: Long,
+    val nickname: String,
+    val rank: String,
+    val userId: Long,
+    val username: String
+)
+
+data class PointDetail(
+    val coinCount: Long,
+    val date: Long,
+    val desc: String,
+    val id: Long,
+    val reason: String,
+    val type: Int,
+    val userId: Long,
+    val userName: String
+)

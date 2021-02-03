@@ -9,6 +9,10 @@
         <variable
             name="viewModel"
             type="cn.xpcheng.wanadnroidmvvm.viewmodel.SearchViewModel" />
+
+        <variable
+            name="click"
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment.Proxy" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +24,7 @@
             layout="@layout/layout_toolbar" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -72,12 +77,13 @@
                     app:layout_constraintTop_toBottomOf="@id/ry_hot_search" />
 
                 <TextView
+                    android:padding="5dp"
                     android:id="@+id/iv_delete_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:foreground="?selectableItemBackground"
-                    android:onClick="@{()->viewModel.deleteAllHistory()}"
+                    android:onClick="@{()->click.deleteAll()}"
                     android:text="清空"
                     android:textSize="12sp"
                     android:visibility="@{viewModel.historyKeys.size()>0?View.VISIBLE:View.GONE}"

@@ -13,9 +13,12 @@ import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
 import cn.xpcheng.wanadnroidmvvm.viewmodel.TreeArticleViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
+import com.fengchen.uistatus.UiStatusController
+import com.fengchen.uistatus.annotation.UiStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -60,7 +63,18 @@ class TreeArticleFragment : BaseFragment<TreeArticleViewModel, LayoutRecyclerVie
 
     override fun getViewModel(): TreeArticleViewModel = mViewModel
 
+    private lateinit var mUiStatusController: UiStatusController
+
     override fun initView() {
+
+
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            page = 0
+            mViewModel.getTreeArticle(page, cid)
+        }
+
         mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
@@ -113,7 +127,12 @@ class TreeArticleFragment : BaseFragment<TreeArticleViewModel, LayoutRecyclerVie
 
             if (it.curPage == 1) {
                 mDataBinding.swipeRefresh.isRefreshing = false
-                mAdapter.setList(it.datas)
+                if (it.datas.isNotEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    mAdapter.setList(it.datas)
+                } else {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                }
             } else {
                 mAdapter.addData(it.datas)
             }

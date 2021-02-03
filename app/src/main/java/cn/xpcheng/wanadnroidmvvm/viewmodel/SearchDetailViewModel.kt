@@ -2,7 +2,8 @@ package cn.xpcheng.wanadnroidmvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import cn.xpcheng.mvvm_core.base.viewmodel.BaseViewModel
-import cn.xpcheng.wanadnroidmvvm.data.bean.ArticleBody
+import cn.xpcheng.wanadnroidmvvm.data.bean.Article
+import cn.xpcheng.wanadnroidmvvm.data.bean.PageInfo
 import cn.xpcheng.wanadnroidmvvm.repository.SearchDetailRepository
 
 /**
@@ -12,9 +13,9 @@ import cn.xpcheng.wanadnroidmvvm.repository.SearchDetailRepository
  */
 class SearchDetailViewModel(private val searchDetailRepository: SearchDetailRepository) :
     BaseViewModel() {
-    var searchResult = MutableLiveData<ArticleBody>()
+    var searchResult = MutableLiveData<PageInfo<Article>>()
 
     fun search(key: String, page: Int) {
-        launch({ searchDetailRepository.search(key, page) }, searchResult, true)
+        launch({ searchDetailRepository.search(key, page) }, searchResult, false)
     }
 }

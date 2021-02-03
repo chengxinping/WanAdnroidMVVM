@@ -18,7 +18,7 @@ class SearchViewModel(private val searchRepository: SearchRepository) : BaseView
     var historyKeys = MutableLiveData<MutableList<SearchHistoryKey>>()
 
     fun getHotKey() {
-        launch({ searchRepository.getHotKey() }, hotKeys, true)
+        launch({ searchRepository.getHotKey() }, hotKeys, false)
     }
 
     fun getHistory() {
