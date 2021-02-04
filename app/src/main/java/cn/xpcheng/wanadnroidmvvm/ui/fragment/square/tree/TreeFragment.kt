@@ -1,7 +1,6 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.square.tree
 
 import android.content.Context
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
@@ -13,6 +12,7 @@ import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
 import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.TreeAdapter
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.MainFragmentDirections
 import cn.xpcheng.wanadnroidmvvm.viewmodel.TreeViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
@@ -37,10 +37,8 @@ class TreeFragment : BaseFragment<TreeViewModel, LayoutRecyclerViewBinding>() {
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Tree>()
-
     private val mAdapter: TreeAdapter by lazy {
-        TreeAdapter(mData, ProxyClick())
+        TreeAdapter(arrayListOf(), ProxyClick())
     }
 
     override fun getLayoutId(): Int = R.layout.layout_recycler_view

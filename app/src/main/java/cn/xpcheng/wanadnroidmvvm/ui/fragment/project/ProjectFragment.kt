@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.project
 
 import android.text.Html
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
-import cn.xpcheng.wanadnroidmvvm.viewmodel.WxViewModel
+import cn.xpcheng.wanadnroidmvvm.viewmodel.ProjectViewModel
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
 import com.google.android.material.tabs.TabLayoutMediator
@@ -18,13 +18,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *@time 2020/7/30
  *@desc
  */
-class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
-
-    private val mViewModel: WxViewModel by viewModel()
+class ProjectFragment : BaseFragment<ProjectViewModel, LayoutTablayoutBinding>() {
+    private val mViewModel: ProjectViewModel by viewModel()
 
     override fun getLayoutId(): Int = R.layout.layout_tablayout
 
-    override fun getViewModel(): WxViewModel = mViewModel
+    override fun getViewModel(): ProjectViewModel = mViewModel
 
     private lateinit var mUiStatusController: UiStatusController
 
@@ -33,15 +32,15 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
     }
 
     override fun createObserver() {
-        mViewModel.wxTree.observe(viewLifecycleOwner, Observer {
+        mViewModel.projectTree.observe(viewLifecycleOwner, Observer {
             mDataBinding.viewPager.run {
                 offscreenPageLimit = it.size
 
-                adapter = object : FragmentStateAdapter(this@WxFragment) {
+                adapter = object : FragmentStateAdapter(this@ProjectFragment) {
                     override fun getItemCount(): Int = it.size
 
                     override fun createFragment(position: Int): Fragment {
-                        return WxChildFragment.newInstance(it[position].id)
+                        return ProjectChildFragment.newInstance(it[position].id)
                     }
 
                 }
@@ -50,12 +49,14 @@ class WxFragment : BaseFragment<WxViewModel, LayoutTablayoutBinding>() {
             TabLayoutMediator(
                 mDataBinding.tabLayout,
                 mDataBinding.viewPager
-            ) { tab, position -> tab.text = Html.fromHtml(it[position].name) }.attach()
+            ) { tab, position ->
+                tab.text = Html.fromHtml(it[position].name)
+            }.attach()
             mUiStatusController.changeUiStatus(UiStatus.CONTENT)
         })
     }
 
     override fun lazyLoadData() {
-        mViewModel.getWxTree()
+        mViewModel.getProjectTree()
     }
 }

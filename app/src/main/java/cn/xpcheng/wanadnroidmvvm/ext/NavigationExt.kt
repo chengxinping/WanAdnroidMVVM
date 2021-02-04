@@ -28,16 +28,16 @@ fun Fragment.navigateBack() {
 
 fun Fragment.navOrLogin(@IdRes resId: Int, bundle: Bundle? = null) {
     if (CacheUtil.isLogin()) {
-        this.nav(R.id.action_global_loginFragment)
-    } else {
         this.nav(resId, bundle)
+    } else {
+        this.nav(R.id.action_global_loginFragment)
     }
 }
 
 fun Fragment.navOrLogin(action: NavDirections) {
     if (CacheUtil.isLogin()) {
-        this.nav(R.id.action_global_loginFragment)
-    } else {
         this.nav(action)
+    } else {
+        this.nav(R.id.action_global_loginFragment)
     }
 }

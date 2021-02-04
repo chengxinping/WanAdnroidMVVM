@@ -1,11 +1,9 @@
 package cn.xpcheng.wanadnroidmvvm.ui.adapter
 
 import cn.xpcheng.wanadnroidmvvm.R
-import cn.xpcheng.wanadnroidmvvm.data.bean.HotKey
 import cn.xpcheng.wanadnroidmvvm.data.bean.SearchHistoryKey
 import cn.xpcheng.wanadnroidmvvm.databinding.ItemHistorySearchBinding
-import cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment
-import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchViewModel
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.search.SearchFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 

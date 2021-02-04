@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.search
 
 import android.view.Menu
 import android.view.MenuInflater

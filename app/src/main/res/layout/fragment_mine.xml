@@ -7,7 +7,7 @@
 
         <variable
             name="click"
-            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.MineFragment.ProxyClick" />
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.MineFragment.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.square.tree
 
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +9,6 @@ import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
@@ -51,10 +50,9 @@ class TreeArticleFragment : BaseFragment<TreeArticleViewModel, LayoutRecyclerVie
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Article>()
 
     private val mAdapter: HomeAdapter by lazy {
-        HomeAdapter(mData)
+        HomeAdapter(arrayListOf())
     }
 
     private val mViewModel: TreeArticleViewModel by viewModel()
@@ -87,8 +85,10 @@ class TreeArticleFragment : BaseFragment<TreeArticleViewModel, LayoutRecyclerVie
 
                 nav(
                     NavigationDirections.actionGlobalWebViewFragment(
-                        mData[position].id, mData[position].link, mData[position].title,
-                        mData[position].collect
+                        mAdapter.data[position].id,
+                        mAdapter.data[position].link,
+                        mAdapter.data[position].title,
+                        mAdapter.data[position].collect
                     )
                 )
             }

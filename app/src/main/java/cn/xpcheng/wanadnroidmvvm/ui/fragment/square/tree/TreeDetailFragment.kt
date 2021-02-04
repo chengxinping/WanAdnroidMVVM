@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.square.tree
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs

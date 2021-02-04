@@ -1,13 +1,8 @@
 package cn.xpcheng.wanadnroidmvvm.ui.adapter
 
 import cn.xpcheng.wanadnroidmvvm.R
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.data.bean.TreeBean
-import cn.xpcheng.wanadnroidmvvm.databinding.ItemFlowBinding
-import cn.xpcheng.wanadnroidmvvm.databinding.ItemNavigationChildBinding
 import cn.xpcheng.wanadnroidmvvm.databinding.ItemTreeChildBinding
-import cn.xpcheng.wanadnroidmvvm.ui.fragment.NavigationFragment
-import cn.xpcheng.wanadnroidmvvm.ui.fragment.TreeFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 

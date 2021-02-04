@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.point
 
 import android.content.Context
 import android.view.View
@@ -9,7 +9,6 @@ import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Point
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentPointBinding
 import cn.xpcheng.wanadnroidmvvm.ext.*
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.RankAdapter
@@ -45,10 +44,8 @@ class PointFragment : BaseFragment<PointViewModel, FragmentPointBinding>() {
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Point>()
-
     private val mAdapter: RankAdapter by lazy {
-        RankAdapter(mData)
+        RankAdapter(arrayListOf())
     }
 
     private lateinit var mUiStatusController: UiStatusController

@@ -1,19 +1,18 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.search
 
 import android.content.Context
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
+import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.PointDetail
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentRecyclerViewBinding
-import cn.xpcheng.wanadnroidmvvm.ext.init
-import cn.xpcheng.wanadnroidmvvm.ext.initClose
-import cn.xpcheng.wanadnroidmvvm.ext.navigateBack
-import cn.xpcheng.wanadnroidmvvm.ext.onReload
-import cn.xpcheng.wanadnroidmvvm.ui.adapter.PointDetailAdapter
-import cn.xpcheng.wanadnroidmvvm.viewmodel.MyPointDetailViewModel
+import cn.xpcheng.wanadnroidmvvm.ext.*
+import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
+import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchDetailViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -21,20 +20,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author ChengXinPing
- * @time   2021/2/4 9:42
+ * @time   2020/10/9 9:47
  *
  */
-class MyPointDetailFragment : BaseFragment<MyPointDetailViewModel, FragmentRecyclerViewBinding>() {
+class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentRecyclerViewBinding>() {
 
-    private val mViewModel: MyPointDetailViewModel by viewModel()
+    private var page = 0
 
-    override fun getLayoutId(): Int = R.layout.fragment_recycler_view
+    private val args: SearchDetailFragmentArgs by navArgs()
 
-    override fun getViewModel(): MyPointDetailViewModel = mViewModel
-
-    private lateinit var mUiStatusController: UiStatusController
-
-    private var page = 1
+    private val mViewModel: SearchDetailViewModel by viewModel()
 
     private val mLinearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(activity)
@@ -45,40 +40,58 @@ class MyPointDetailFragment : BaseFragment<MyPointDetailViewModel, FragmentRecyc
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<PointDetail>()
 
-    private val mAdapter: PointDetailAdapter by lazy {
-        PointDetailAdapter(mData)
+    private val mAdapter: HomeAdapter by lazy {
+        HomeAdapter(arrayListOf())
     }
 
+    private lateinit var mUiStatusController: UiStatusController
+
+
+    override fun getLayoutId(): Int = R.layout.fragment_recycler_view
+
+    override fun getViewModel(): SearchDetailViewModel = mViewModel
+
     override fun initView() {
-        mDataBinding.layoutToolbar.toolbar.initClose("积分详情") {
+
+        mDataBinding.layoutToolbar.toolbar.initClose(args.searchKey, onBack = {
             navigateBack()
-        }
-
-        mUiStatusController = UiStatusController.get().bind(mDataBinding.recyclerView.swipeRefresh)
-
-        onReload(mUiStatusController) {
-            page = 1
-            mViewModel.getMyPointDetail(page)
-        }
+        })
 
         mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.recyclerView.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            page = 0
+            mViewModel.search(args.searchKey, page)
+        }
+
         mAdapter.run {
 
             loadMoreModule.setOnLoadMoreListener {
-                mViewModel.getMyPointDetail(page)
+                mViewModel.search(args.searchKey, page)
+            }
+            setOnItemClickListener { _, _, position ->
+
+                nav(
+                    NavigationDirections.actionGlobalWebViewFragment(
+                        mAdapter.data[position].id,
+                        mAdapter.data[position].link,
+                        mAdapter.data[position].title,
+                        mAdapter.data[position].collect
+                    )
+                )
             }
         }
 
         mDataBinding.recyclerView.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
-                page = 1
-                mViewModel.getMyPointDetail(page)
+                page = 0
+                mViewModel.search(args.searchKey, page)
             }
         }
 
@@ -95,12 +108,11 @@ class MyPointDetailFragment : BaseFragment<MyPointDetailViewModel, FragmentRecyc
     }
 
     override fun lazyLoadData() {
-        page = 1
-        mViewModel.getMyPointDetail(page)
+        mViewModel.search(args.searchKey, page)
     }
 
     override fun createObserver() {
-        mViewModel.pointDetail.observe(viewLifecycleOwner, {
+        mViewModel.searchResult.observe(viewLifecycleOwner, Observer {
             page++
             if (it.curPage == 1) {
                 mDataBinding.recyclerView.swipeRefresh.isRefreshing = false

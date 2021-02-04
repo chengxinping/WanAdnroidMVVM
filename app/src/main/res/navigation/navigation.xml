@@ -54,11 +54,19 @@
                 android:defaultValue="0L"
                 app:argType="long" />
         </action>
+
+        <action
+            android:id="@+id/action_mainFragment_to_collectFragment"
+            app:destination="@id/collectFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.WebViewFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.web.WebViewFragment"
         android:label="详情">
         <argument
             android:name="id"
@@ -81,7 +89,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.search.SearchFragment"
         android:label="搜索">
 
         <action
@@ -100,7 +108,7 @@
 
     <fragment
         android:id="@+id/searchDetailFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchDetailFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.search.SearchDetailFragment"
         android:label="搜索详情">
         <argument
             android:name="searchKey"
@@ -110,7 +118,7 @@
 
     <fragment
         android:id="@+id/treeDetailFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.TreeDetailFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.square.tree.TreeDetailFragment"
         tools:layout="知识体系">
         <argument
             android:name="data"
@@ -123,7 +131,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.LoginFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.login.LoginFragment"
         tools:layout="登录">
 
         <action
@@ -138,12 +146,12 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.RegisterFragment"
-        tools:layout="注册" />
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.login.RegisterFragment"
+        android:label="注册" />
 
     <fragment
         android:id="@+id/pointFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.PointFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.point.PointFragment"
         android:label="我的积分">
         <argument
             android:name="rank"
@@ -168,8 +176,13 @@
 
     <fragment
         android:id="@+id/myPointDetailFragment"
-        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.MyPointDetailFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.point.MyPointDetailFragment"
         android:label="积分详情" />
+
+    <fragment
+        android:id="@+id/collectFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.collect.CollectFragment"
+        android:label="我的收藏" />
 
     <action
         android:id="@+id/action_global_webViewFragment"

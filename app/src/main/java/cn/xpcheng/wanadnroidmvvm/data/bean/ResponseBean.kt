@@ -165,3 +165,33 @@ data class PointDetail(
     val userId: Long,
     val userName: String
 )
+
+data class WebSite(
+    val desc: String,
+    val icon: String,
+    val id: Long,
+    val link: String,
+    val name: String,
+    val order: Int,
+    val userId: Long,
+    val visible: Int
+)
+
+data class Collect(
+    val chapterId: Int,
+    val author: String,
+    val chapterName: String,
+    val courseId: Int,
+    val desc: String,
+    val envelopePic: String,
+    val id: Int,
+    val link: String,
+    val niceDate: String,
+    val origin: String,
+    val originId: Int,
+    val publishTime: Long,
+    val title: String,
+    val userId: Int,
+    val visible: Int,
+    val zan: Int
+)

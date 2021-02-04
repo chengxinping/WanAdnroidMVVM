@@ -6,7 +6,7 @@
 
         <variable
             name="click"
-            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.LoginFragment.Proxy" />
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.login.LoginFragment.Proxy" />
     </data>
 
     <LinearLayout

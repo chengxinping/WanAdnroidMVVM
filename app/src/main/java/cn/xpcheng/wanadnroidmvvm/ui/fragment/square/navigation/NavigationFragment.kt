@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.square.navigation
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator

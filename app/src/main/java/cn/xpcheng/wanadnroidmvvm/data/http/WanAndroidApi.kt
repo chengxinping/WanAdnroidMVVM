@@ -146,4 +146,13 @@ interface WanAndroidApi {
     @GET("lg/coin/list/{page}/json")
     suspend fun getMyPointDetail(@Path("page") page: Int): BaseApiResponse<PageInfo<PointDetail>>
 
+    /**
+     * 收藏文章列表
+     * @param page 从0开始
+     */
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getCollectArticle(@Path("page") page: Int): BaseApiResponse<PageInfo<Collect>>
+
+    @GET("lg/collect/usertools/json")
+    suspend fun getCollectUrl(): BaseApiResponse<List<WebSite>>
 }

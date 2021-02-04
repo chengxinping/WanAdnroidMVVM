@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.login
 
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer

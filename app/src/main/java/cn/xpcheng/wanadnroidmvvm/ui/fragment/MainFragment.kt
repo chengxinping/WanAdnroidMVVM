@@ -1,15 +1,17 @@
 package cn.xpcheng.wanadnroidmvvm.ui.fragment
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.http.NULL_TO_EMPTY_STRING_ADAPTER
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentMainBinding
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.home.HomeFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.MineFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.project.ProjectFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.square.SquareFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.wechat.WxFragment
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import com.squareup.moshi.Moshi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**

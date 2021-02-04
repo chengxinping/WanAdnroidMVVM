@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.home
 
 import android.content.Context
 import android.widget.ImageView
@@ -9,7 +9,6 @@ import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.FragmentHomeBinding
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutBannerBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
@@ -52,10 +51,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Article>()
 
     private val mAdapter: HomeAdapter by lazy {
-        HomeAdapter(mData)
+        HomeAdapter(arrayListOf())
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home
@@ -97,8 +95,10 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
                 nav(
                     NavigationDirections.actionGlobalWebViewFragment(
-                        mData[position].id, mData[position].link, mData[position].title,
-                        mData[position].collect
+                        mAdapter.data[position].id,
+                        mAdapter.data[position].link,
+                        mAdapter.data[position].title,
+                        mAdapter.data[position].collect
                     )
                 )
             }

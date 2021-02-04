@@ -1,10 +1,14 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.square
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutTablayoutBinding
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.square.navigation.NavigationFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.square.question.QuestionFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.square.square.SquareListFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.square.tree.TreeFragment
 import cn.xpcheng.wanadnroidmvvm.viewmodel.EmptyViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

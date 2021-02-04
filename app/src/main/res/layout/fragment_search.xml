@@ -12,7 +12,7 @@
 
         <variable
             name="click"
-            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.SearchFragment.Proxy" />
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.search.SearchFragment.Proxy" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

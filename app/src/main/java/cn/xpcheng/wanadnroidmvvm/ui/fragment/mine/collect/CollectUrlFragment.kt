@@ -1,20 +1,17 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.collect
 
 import android.content.Context
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
-import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
 import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
 import cn.xpcheng.wanadnroidmvvm.ext.onReload
-import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
-import cn.xpcheng.wanadnroidmvvm.viewmodel.SquareListViewModel
+import cn.xpcheng.wanadnroidmvvm.ui.adapter.CollectUrlAdapter
+import cn.xpcheng.wanadnroidmvvm.viewmodel.CollectUrlViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -22,14 +19,16 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author ChengXinPing
- * @time   2020/11/19 9:57
+ * @time   2021/2/4 15:12
  *
  */
-class SquareListFragment : BaseFragment<SquareListViewModel, LayoutRecyclerViewBinding>() {
+class CollectUrlFragment : BaseFragment<CollectUrlViewModel, LayoutRecyclerViewBinding>() {
 
-    private val mViewModel: SquareListViewModel by viewModel()
+    private val mViewModel: CollectUrlViewModel by viewModel()
 
-    private var page = 0
+    override fun getLayoutId(): Int = R.layout.layout_recycler_view
+
+    override fun getViewModel(): CollectUrlViewModel = mViewModel
 
     private val mLinearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(activity)
@@ -40,41 +39,34 @@ class SquareListFragment : BaseFragment<SquareListViewModel, LayoutRecyclerViewB
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Article>()
-
-    private val mAdapter: HomeAdapter by lazy {
-        HomeAdapter(mData)
+    private val mAdapter: CollectUrlAdapter by lazy {
+        CollectUrlAdapter(arrayListOf())
     }
-
-    override fun getLayoutId(): Int = R.layout.layout_recycler_view
-
-    override fun getViewModel(): SquareListViewModel = mViewModel
 
     private lateinit var mUiStatusController: UiStatusController
 
     override fun initView() {
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+
+        onReload(mUiStatusController) {
+            mViewModel.getCollectUrl()
+        }
+
         mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
-        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
-
-        onReload(mUiStatusController) {
-            page = 0
-            mViewModel.getSquareList(page)
-        }
-
         mAdapter.run {
 
-            loadMoreModule.setOnLoadMoreListener {
-                mViewModel.getSquareList(page)
-            }
+
             setOnItemClickListener { _, _, position ->
 
                 nav(
                     NavigationDirections.actionGlobalWebViewFragment(
-                        mData[position].id, mData[position].link, mData[position].title,
-                        mData[position].collect
+                        -1,
+                        mAdapter.data[position].link,
+                        mAdapter.data[position].name,
+                        true
                     )
                 )
             }
@@ -82,8 +74,7 @@ class SquareListFragment : BaseFragment<SquareListViewModel, LayoutRecyclerViewB
         mDataBinding.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
-                page = 0
-                mViewModel.getSquareList(page)
+                mViewModel.getCollectUrl()
             }
         }
 
@@ -100,32 +91,14 @@ class SquareListFragment : BaseFragment<SquareListViewModel, LayoutRecyclerViewB
     }
 
     override fun lazyLoadData() {
-        page = 0
-        mViewModel.getSquareList(page)
+        mViewModel.getCollectUrl()
     }
 
     override fun createObserver() {
-        mViewModel.squareList.observe(viewLifecycleOwner, Observer {
-            page++
+        mViewModel.webSite.observe(viewLifecycleOwner, {
             mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-            if (it.curPage == 1) {
-                mDataBinding.swipeRefresh.isRefreshing = false
-                mAdapter.setList(it.datas)
-            } else {
-                mAdapter.addData(it.datas)
-            }
-
-            mAdapter.loadMoreModule.run {
-                if (it.over)
-                    loadMoreEnd()
-                else
-                    loadMoreComplete()
-            }
+            mDataBinding.swipeRefresh.isRefreshing = false
+            mAdapter.setList(it)
         })
-    }
-
-    override fun handlerError(appException: AppException) {
-        super.handlerError(appException)
-        mAdapter.loadMoreModule.loadMoreFail()
     }
 }

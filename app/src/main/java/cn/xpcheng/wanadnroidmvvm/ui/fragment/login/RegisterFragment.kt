@@ -1,6 +1,5 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.login
 
-import android.app.IntentService
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import cn.xpcheng.wanadnroidmvvm.R

@@ -1,4 +1,4 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.mine
 
 import androidx.fragment.app.activityViewModels
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
@@ -8,6 +8,7 @@ import cn.xpcheng.wanadnroidmvvm.databinding.FragmentMineBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
 import cn.xpcheng.wanadnroidmvvm.ext.nav
 import cn.xpcheng.wanadnroidmvvm.ext.navOrLogin
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.MainFragmentDirections
 import cn.xpcheng.wanadnroidmvvm.utils.CacheUtil
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MainViewModel
 import cn.xpcheng.wanadnroidmvvm.viewmodel.MineViewModel
@@ -124,7 +125,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         }
 
         fun goToMyCollects() {
-
+            navOrLogin(R.id.action_mainFragment_to_collectFragment)
         }
 
         fun goToMyArticles() {

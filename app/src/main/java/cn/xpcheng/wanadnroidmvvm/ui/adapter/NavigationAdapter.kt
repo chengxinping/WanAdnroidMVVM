@@ -5,7 +5,7 @@ import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.data.bean.NavigationBean
 import cn.xpcheng.wanadnroidmvvm.databinding.ItemNavigationBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
-import cn.xpcheng.wanadnroidmvvm.ui.fragment.NavigationFragment
+import cn.xpcheng.wanadnroidmvvm.ui.fragment.square.navigation.NavigationFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.google.android.flexbox.FlexDirection

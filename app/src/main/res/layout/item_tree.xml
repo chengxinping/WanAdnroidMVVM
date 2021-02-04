@@ -11,7 +11,7 @@
 
         <variable
             name="click"
-            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.TreeFragment.ProxyClick" />
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.square.tree.TreeFragment.ProxyClick" />
     </data>
 
     <androidx.cardview.widget.CardView

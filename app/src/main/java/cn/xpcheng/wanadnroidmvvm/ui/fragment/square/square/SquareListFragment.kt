@@ -1,19 +1,19 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.square.square
 
 import android.content.Context
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.databinding.FragmentRecyclerViewBinding
-import cn.xpcheng.wanadnroidmvvm.ext.*
+import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
+import cn.xpcheng.wanadnroidmvvm.ext.init
+import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.onReload
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
-import cn.xpcheng.wanadnroidmvvm.viewmodel.SearchDetailViewModel
+import cn.xpcheng.wanadnroidmvvm.viewmodel.SquareListViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -21,16 +21,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author ChengXinPing
- * @time   2020/10/9 9:47
+ * @time   2020/11/19 9:57
  *
  */
-class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentRecyclerViewBinding>() {
+class SquareListFragment : BaseFragment<SquareListViewModel, LayoutRecyclerViewBinding>() {
+
+    private val mViewModel: SquareListViewModel by viewModel()
 
     private var page = 0
-
-    private val args: SearchDetailFragmentArgs by navArgs()
-
-    private val mViewModel: SearchDetailViewModel by viewModel()
 
     private val mLinearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(activity)
@@ -41,87 +39,78 @@ class SearchDetailFragment : BaseFragment<SearchDetailViewModel, FragmentRecycle
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Article>()
 
     private val mAdapter: HomeAdapter by lazy {
-        HomeAdapter(mData)
+        HomeAdapter(arrayListOf())
     }
+
+    override fun getLayoutId(): Int = R.layout.layout_recycler_view
+
+    override fun getViewModel(): SquareListViewModel = mViewModel
 
     private lateinit var mUiStatusController: UiStatusController
 
-
-    override fun getLayoutId(): Int = R.layout.fragment_recycler_view
-
-    override fun getViewModel(): SearchDetailViewModel = mViewModel
-
     override fun initView() {
-
-        mDataBinding.layoutToolbar.toolbar.initClose(args.searchKey, onBack = {
-            navigateBack()
-        })
-
-        mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
-        mUiStatusController = UiStatusController.get().bind(mDataBinding.recyclerView.swipeRefresh)
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
 
         onReload(mUiStatusController) {
             page = 0
-            mViewModel.search(args.searchKey, page)
+            mViewModel.getSquareList(page)
         }
 
         mAdapter.run {
 
             loadMoreModule.setOnLoadMoreListener {
-                mViewModel.search(args.searchKey, page)
+                mViewModel.getSquareList(page)
             }
             setOnItemClickListener { _, _, position ->
 
                 nav(
                     NavigationDirections.actionGlobalWebViewFragment(
-                        mData[position].id, mData[position].link, mData[position].title,
-                        mData[position].collect
+                        mAdapter.data[position].id,
+                        mAdapter.data[position].link,
+                        mAdapter.data[position].title,
+                        mAdapter.data[position].collect
                     )
                 )
             }
         }
-
-        mDataBinding.recyclerView.swipeRefresh.run {
+        mDataBinding.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 0
-                mViewModel.search(args.searchKey, page)
+                mViewModel.getSquareList(page)
             }
         }
 
-        mDataBinding.recyclerView.fab.setOnClickListener {
-            mDataBinding.recyclerView.recycler.run {
+        mDataBinding.fab.setOnClickListener {
+            mDataBinding.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
                     smoothScrollToPosition(0)
                 }
             }
-        }
 
+        }
     }
 
     override fun lazyLoadData() {
-        mViewModel.search(args.searchKey, page)
+        page = 0
+        mViewModel.getSquareList(page)
     }
 
     override fun createObserver() {
-        mViewModel.searchResult.observe(viewLifecycleOwner, Observer {
+        mViewModel.squareList.observe(viewLifecycleOwner, Observer {
             page++
+            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
             if (it.curPage == 1) {
-                mDataBinding.recyclerView.swipeRefresh.isRefreshing = false
-                if (it.datas.isNotEmpty()) {
-                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-                    mAdapter.setList(it.datas)
-                } else {
-                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
-                }
+                mDataBinding.swipeRefresh.isRefreshing = false
+                mAdapter.setList(it.datas)
             } else {
                 mAdapter.addData(it.datas)
             }

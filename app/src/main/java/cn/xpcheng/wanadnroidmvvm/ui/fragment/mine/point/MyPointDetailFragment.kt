@@ -1,20 +1,19 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.point
 
 import android.content.Context
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
-import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.data.bean.Article
-import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
+import cn.xpcheng.wanadnroidmvvm.data.bean.PointDetail
+import cn.xpcheng.wanadnroidmvvm.databinding.FragmentRecyclerViewBinding
 import cn.xpcheng.wanadnroidmvvm.ext.init
-import cn.xpcheng.wanadnroidmvvm.ext.nav
+import cn.xpcheng.wanadnroidmvvm.ext.initClose
+import cn.xpcheng.wanadnroidmvvm.ext.navigateBack
 import cn.xpcheng.wanadnroidmvvm.ext.onReload
-import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
-import cn.xpcheng.wanadnroidmvvm.viewmodel.QuestionViewModel
+import cn.xpcheng.wanadnroidmvvm.ui.adapter.PointDetailAdapter
+import cn.xpcheng.wanadnroidmvvm.viewmodel.MyPointDetailViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -22,12 +21,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author ChengXinPing
- * @time   2020/11/19 9:57
+ * @time   2021/2/4 9:42
  *
  */
-class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBinding>() {
+class MyPointDetailFragment : BaseFragment<MyPointDetailViewModel, FragmentRecyclerViewBinding>() {
 
-    private val mViewModel: QuestionViewModel by viewModel()
+    private val mViewModel: MyPointDetailViewModel by viewModel()
+
+    override fun getLayoutId(): Int = R.layout.fragment_recycler_view
+
+    override fun getViewModel(): MyPointDetailViewModel = mViewModel
+
+    private lateinit var mUiStatusController: UiStatusController
 
     private var page = 1
 
@@ -40,78 +45,70 @@ class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBindi
         SpaceItemDecoration(DisplayUtil.dp2px(activity as Context, 10F))
     }
 
-    private val mData = mutableListOf<Article>()
 
-    private val mAdapter: HomeAdapter by lazy {
-        HomeAdapter(mData)
+    private val mAdapter: PointDetailAdapter by lazy {
+        PointDetailAdapter(arrayListOf())
     }
 
-    override fun getLayoutId(): Int = R.layout.layout_recycler_view
-
-    override fun getViewModel(): QuestionViewModel = mViewModel
-
-    private lateinit var mUiStatusController: UiStatusController
-
     override fun initView() {
-        mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
-            addItemDecoration(mSpaceItemDecoration)
+        mDataBinding.layoutToolbar.toolbar.initClose("积分详情") {
+            navigateBack()
         }
 
-        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.recyclerView.swipeRefresh)
 
         onReload(mUiStatusController) {
             page = 1
-            mViewModel.getQuestionList(page)
+            mViewModel.getMyPointDetail(page)
         }
 
+        mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
+            addItemDecoration(mSpaceItemDecoration)
+        }
 
         mAdapter.run {
 
             loadMoreModule.setOnLoadMoreListener {
-                mViewModel.getQuestionList(page)
-            }
-            setOnItemClickListener { _, _, position ->
-
-                nav(
-                    NavigationDirections.actionGlobalWebViewFragment(
-                        mData[position].id, mData[position].link, mData[position].title,
-                        mData[position].collect
-                    )
-                )
+                mViewModel.getMyPointDetail(page)
             }
         }
-        mDataBinding.swipeRefresh.run {
+
+        mDataBinding.recyclerView.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 1
-                mViewModel.getQuestionList(page)
+                mViewModel.getMyPointDetail(page)
             }
         }
 
-        mDataBinding.fab.setOnClickListener {
-            mDataBinding.recycler.run {
+        mDataBinding.recyclerView.fab.setOnClickListener {
+            mDataBinding.recyclerView.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
                     smoothScrollToPosition(0)
                 }
             }
-
         }
+
     }
 
     override fun lazyLoadData() {
         page = 1
-        mViewModel.getQuestionList(page)
+        mViewModel.getMyPointDetail(page)
     }
 
     override fun createObserver() {
-        mViewModel.questionList.observe(viewLifecycleOwner, Observer {
+        mViewModel.pointDetail.observe(viewLifecycleOwner, {
             page++
-            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
             if (it.curPage == 1) {
-                mDataBinding.swipeRefresh.isRefreshing = false
-                mAdapter.setList(it.datas)
+                mDataBinding.recyclerView.swipeRefresh.isRefreshing = false
+                if (it.datas.isNotEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    mAdapter.setList(it.datas)
+                } else {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                }
             } else {
                 mAdapter.addData(it.datas)
             }
