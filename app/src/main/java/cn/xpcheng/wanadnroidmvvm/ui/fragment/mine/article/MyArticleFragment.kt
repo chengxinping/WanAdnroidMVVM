@@ -1,19 +1,16 @@
-package cn.xpcheng.wanadnroidmvvm.ui.fragment.square.question
+package cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.article
 
 import android.content.Context
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xpcheng.common.utils.DisplayUtil
 import cn.xpcheng.mvvm_core.base.network.AppException
 import cn.xpcheng.wanadnroidmvvm.NavigationDirections
 import cn.xpcheng.wanadnroidmvvm.R
 import cn.xpcheng.wanadnroidmvvm.base.BaseFragment
-import cn.xpcheng.wanadnroidmvvm.databinding.LayoutRecyclerViewBinding
-import cn.xpcheng.wanadnroidmvvm.ext.init
-import cn.xpcheng.wanadnroidmvvm.ext.nav
-import cn.xpcheng.wanadnroidmvvm.ext.onReload
+import cn.xpcheng.wanadnroidmvvm.databinding.FragmentRecyclerViewBinding
+import cn.xpcheng.wanadnroidmvvm.ext.*
 import cn.xpcheng.wanadnroidmvvm.ui.adapter.HomeAdapter
-import cn.xpcheng.wanadnroidmvvm.viewmodel.QuestionViewModel
+import cn.xpcheng.wanadnroidmvvm.viewmodel.MyArticleViewModel
 import cn.xpcheng.wanadnroidmvvm.widget.SpaceItemDecoration
 import com.fengchen.uistatus.UiStatusController
 import com.fengchen.uistatus.annotation.UiStatus
@@ -21,12 +18,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author ChengXinPing
- * @time   2020/11/19 9:57
+ * @time   2021/2/4 16:57
  *
  */
-class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBinding>() {
-
-    private val mViewModel: QuestionViewModel by viewModel()
+class MyArticleFragment : BaseFragment<MyArticleViewModel, FragmentRecyclerViewBinding>() {
 
     private var page = 1
 
@@ -44,29 +39,46 @@ class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBindi
         HomeAdapter(arrayListOf())
     }
 
-    override fun getLayoutId(): Int = R.layout.layout_recycler_view
-
-    override fun getViewModel(): QuestionViewModel = mViewModel
-
     private lateinit var mUiStatusController: UiStatusController
 
+    private val mViewModel: MyArticleViewModel by viewModel()
+
+    override fun getLayoutId(): Int = R.layout.fragment_recycler_view
+
+    override fun getViewModel(): MyArticleViewModel = mViewModel
+
     override fun initView() {
-        mDataBinding.recycler.init(mLinearLayoutManager, mAdapter).run {
+        mDataBinding.layoutToolbar.toolbar.run {
+            initClose("我分享的文章", onBack = {
+                navigateBack()
+            })
+
+            inflateMenu(R.menu.menu_add)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menu_add -> {
+
+                    }
+                }
+                true
+            }
+        }
+
+        mDataBinding.recyclerView.recycler.init(mLinearLayoutManager, mAdapter).run {
             addItemDecoration(mSpaceItemDecoration)
         }
 
-        mUiStatusController = UiStatusController.get().bind(mDataBinding.swipeRefresh)
+        mUiStatusController = UiStatusController.get().bind(mDataBinding.recyclerView.swipeRefresh)
 
         onReload(mUiStatusController) {
             page = 1
-            mViewModel.getQuestionList(page)
+            mViewModel.getMyArticle(page)
         }
-
 
         mAdapter.run {
 
             loadMoreModule.setOnLoadMoreListener {
-                mViewModel.getQuestionList(page)
+                mViewModel.getMyArticle(page)
             }
             setOnItemClickListener { _, _, position ->
 
@@ -80,44 +92,48 @@ class QuestionFragment : BaseFragment<QuestionViewModel, LayoutRecyclerViewBindi
                 )
             }
         }
-        mDataBinding.swipeRefresh.run {
+
+        mDataBinding.recyclerView.swipeRefresh.run {
             setColorSchemeResources(R.color.Cyan, R.color.Cyan_600)
             setOnRefreshListener {
                 page = 1
-                mViewModel.getQuestionList(page)
+                mViewModel.getMyArticle(page)
             }
         }
 
-        mDataBinding.fab.setOnClickListener {
-            mDataBinding.recycler.run {
+        mDataBinding.recyclerView.fab.setOnClickListener {
+            mDataBinding.recyclerView.recycler.run {
                 if (mLinearLayoutManager.findFirstVisibleItemPosition() > 20) {
                     scrollToPosition(0)
                 } else {
                     smoothScrollToPosition(0)
                 }
             }
-
         }
     }
 
     override fun lazyLoadData() {
         page = 1
-        mViewModel.getQuestionList(page)
+        mViewModel.getMyArticle(page)
     }
 
     override fun createObserver() {
-        mViewModel.questionList.observe(viewLifecycleOwner, Observer {
+        mViewModel.shareInfo.observe(viewLifecycleOwner, {
             page++
-            mUiStatusController.changeUiStatus(UiStatus.CONTENT)
-            if (it.curPage == 1) {
-                mDataBinding.swipeRefresh.isRefreshing = false
-                mAdapter.setList(it.datas)
+            if (it.shareArticles.curPage == 1) {
+                mDataBinding.recyclerView.swipeRefresh.isRefreshing = false
+                if (it.shareArticles.datas.isNotEmpty()) {
+                    mUiStatusController.changeUiStatus(UiStatus.CONTENT)
+                    mAdapter.setList(it.shareArticles.datas)
+                } else {
+                    mUiStatusController.changeUiStatus(UiStatus.EMPTY)
+                }
             } else {
-                mAdapter.addData(it.datas)
+                mAdapter.addData(it.shareArticles.datas)
             }
 
             mAdapter.loadMoreModule.run {
-                if (it.over)
+                if (it.shareArticles.over)
                     loadMoreEnd()
                 else
                     loadMoreComplete()

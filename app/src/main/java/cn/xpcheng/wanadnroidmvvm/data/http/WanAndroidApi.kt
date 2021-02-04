@@ -155,4 +155,11 @@ interface WanAndroidApi {
 
     @GET("lg/collect/usertools/json")
     suspend fun getCollectUrl(): BaseApiResponse<List<WebSite>>
+
+    /**
+     * 自己的分享的文章列表
+     * @param page 从1开始
+     */
+    @GET("user/lg/private_articles/{page}/json")
+    suspend fun getMyArticle(@Path("page") page: Int): BaseApiResponse<ShareInfo>
 }

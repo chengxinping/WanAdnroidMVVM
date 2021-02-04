@@ -129,7 +129,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         }
 
         fun goToMyArticles() {
-
+            navOrLogin(R.id.action_mainFragment_to_myArticleFragment)
         }
 
 

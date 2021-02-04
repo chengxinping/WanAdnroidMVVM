@@ -37,6 +37,7 @@ val viewModelModule = module {
     viewModel { MyPointDetailViewModel(get()) }
     viewModel { CollectUrlViewModel(get()) }
     viewModel { CollectArticleViewModel(get()) }
+    viewModel { MyArticleViewModel(get()) }
 }
 
 val responseModule = module {
@@ -60,6 +61,7 @@ val responseModule = module {
     factory { MyPointDetailRepository(get()) }
     factory { CollectArticleRepository(get()) }
     factory { CollectUrlRepository(get()) }
+    factory { MyArticleRepository(get()) }
 }
 
 val apiModule = module {

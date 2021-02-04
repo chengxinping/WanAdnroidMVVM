@@ -195,3 +195,8 @@ data class Collect(
     val visible: Int,
     val zan: Int
 )
+
+data class ShareInfo(
+    val coinInfo: Point,
+    val shareArticles: PageInfo<Article>
+)

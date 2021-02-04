@@ -150,5 +150,6 @@ class TreeArticleFragment : BaseFragment<TreeArticleViewModel, LayoutRecyclerVie
     override fun handlerError(appException: AppException) {
         super.handlerError(appException)
         mAdapter.loadMoreModule.loadMoreFail()
+        mUiStatusController.changeUiStatus(UiStatus.LOAD_ERROR)
     }
 }

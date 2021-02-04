@@ -185,6 +185,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun handlerError(appException: AppException) {
         super.handlerError(appException)
         mAdapter.loadMoreModule.loadMoreFail()
+        mUiStatusController.changeUiStatus(UiStatus.LOAD_ERROR)
     }
 
 
