@@ -157,7 +157,19 @@
             android:name="coinCount"
             android:defaultValue="0L"
             app:argType="long" />
+        <action
+            android:id="@+id/action_pointFragment_to_myPointDetailFragment"
+            app:destination="@id/myPointDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/myPointDetailFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.MyPointDetailFragment"
+        android:label="积分详情" />
 
     <action
         android:id="@+id/action_global_webViewFragment"

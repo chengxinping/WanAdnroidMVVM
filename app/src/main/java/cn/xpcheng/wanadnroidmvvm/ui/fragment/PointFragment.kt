@@ -70,8 +70,7 @@ class PointFragment : BaseFragment<PointViewModel, FragmentPointBinding>() {
                                 )
                             )
                         }
-                        R.menu.menu_rank -> {
-                        }
+                        R.id.menu_record -> nav(R.id.action_pointFragment_to_myPointDetailFragment)
                     }
                     true
                 }
@@ -81,7 +80,7 @@ class PointFragment : BaseFragment<PointViewModel, FragmentPointBinding>() {
                 tvMyRank.text = args.rank
                 tvMyName.text = args.userName
                 tvMyCoinCount.text = args.coinCount.toString()
-            }else{
+            } else {
                 myInfo.visibility = View.GONE
             }
         }

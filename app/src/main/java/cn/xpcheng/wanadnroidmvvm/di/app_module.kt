@@ -34,6 +34,7 @@ val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
     viewModel { PointViewModel(get()) }
+    viewModel { MyPointDetailViewModel(get()) }
 }
 
 val responseModule = module {
@@ -54,6 +55,7 @@ val responseModule = module {
     factory { RegisterRepository(get()) }
     factory { MineRepository(get()) }
     factory { PointRepository(get()) }
+    factory { MyPointDetailRepository(get()) }
 }
 
 val apiModule = module {
