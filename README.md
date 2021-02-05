@@ -21,3 +21,6 @@
 通过NavHostFragment来配置各个fragment。系统提供的FragmentNavigator的navigate方法中是通过replace来加载fragment。
 这就导致在切换Tab的时候fargment会重复的调用onCreateView方法。这肯定不是我们需要的。那么我们需要自定义自己的FragmentNavigator来替换系统
 的，通过show和hide的方式来加载fragment。
+
+### 特别感谢
+- 感谢鸿洋大神的[WanAndroid网站提供开放Api](https://www.wanandroid.com/)
