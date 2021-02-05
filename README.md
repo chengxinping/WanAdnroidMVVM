@@ -14,7 +14,7 @@
 
 ####  Kotlin+Jetpack+Coroutines+Retrofit+koin
 
-## 首页功能
+## 功能
 首页分为5个Tab，主要为首页、公众号、广场、项目和我的。
 
 整个页面框架使用BottomNavigationView + Navigation来搭建。通过menu来配置底部菜单。
