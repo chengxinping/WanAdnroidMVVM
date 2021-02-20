@@ -57,7 +57,7 @@ class MyArticleFragment : BaseFragment<MyArticleViewModel, FragmentRecyclerViewB
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_add -> {
-
+                        nav(R.id.action_myArticleFragment_to_uploadFragment)
                     }
                 }
                 true

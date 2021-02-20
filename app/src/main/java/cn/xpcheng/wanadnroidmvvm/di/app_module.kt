@@ -38,6 +38,7 @@ val viewModelModule = module {
     viewModel { CollectUrlViewModel(get()) }
     viewModel { CollectArticleViewModel(get()) }
     viewModel { MyArticleViewModel(get()) }
+    viewModel { UploadArticleViewModel(get()) }
 }
 
 val responseModule = module {
@@ -62,6 +63,7 @@ val responseModule = module {
     factory { CollectArticleRepository(get()) }
     factory { CollectUrlRepository(get()) }
     factory { MyArticleRepository(get()) }
+    factory { UploadArticleRepository(get()) }
 }
 
 val apiModule = module {

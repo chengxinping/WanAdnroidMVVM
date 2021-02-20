@@ -195,7 +195,20 @@
     <fragment
         android:id="@+id/myArticleFragment"
         android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.article.MyArticleFragment"
-        android:label="我分享的文章" />
+        android:label="我分享的文章">
+        <action
+            android:id="@+id/action_myArticleFragment_to_uploadFragment"
+            app:destination="@id/uploadArticleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/uploadArticleFragment"
+        android:name="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.article.UploadArticleFragment"
+        android:label="发布文章" />
 
     <action
         android:id="@+id/action_global_webViewFragment"

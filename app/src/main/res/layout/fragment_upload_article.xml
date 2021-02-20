@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="click"
+            type="cn.xpcheng.wanadnroidmvvm.ui.fragment.mine.article.UploadArticleFragment.ProxyClick" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/layout_toolbar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="18dp"
+            android:text="标题"
+            android:textColor="@color/middle_level_text_color"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/et_title"
+            drawable_radius="@{3}"
+            drawable_shapeMode="@{0}"
+            drawable_solidColor="@{@color/Grey200}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="18dp"
+            android:hint="文章标题"
+            android:inputType="text"
+            android:lines="1"
+            android:padding="12dp"
+            android:textColor="@color/high_level_text_color"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="18dp"
+            android:text="链接"
+            android:textColor="@color/middle_level_text_color"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/et_content"
+            drawable_radius="@{3}"
+            drawable_shapeMode="@{0}"
+            drawable_solidColor="@{@color/Grey200}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="18dp"
+            android:gravity="top|left"
+            android:hint="文章链接"
+            android:maxLines="5"
+            android:minLines="3"
+            android:padding="12dp"
+            android:textColor="@color/high_level_text_color"
+            android:textSize="15sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="18dp"
+            android:onClick="@{()->click.uploadArticle()}"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+</layout>
