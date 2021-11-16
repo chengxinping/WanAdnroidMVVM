@@ -2,14 +2,14 @@ object Versions {
     const val kotlin = "1.4.21"
     const val gradle_tools = "4.1.1"
 
-    const val appcompat = "1.2.0"
-    const val material = "1.2.1"
-    const val constraint = "2.0.4"
+    const val appcompat = "1.3.1"
+    const val material = "1.4.0"
+    const val constraint = "2.1.0"
     const val swipeRefresh = "1.1.0"
 
-    const val lifecycle = "2.2.0"
-    const val navigation = "2.3.2"
-    const val room = "2.2.6"
+    const val lifecycle = "2.3.1"
+    const val navigation = "2.3.5"
+    const val room = "2.3.0"
 
     const val retrofit = "2.9.0"
     const val okHttp = "4.9.0"

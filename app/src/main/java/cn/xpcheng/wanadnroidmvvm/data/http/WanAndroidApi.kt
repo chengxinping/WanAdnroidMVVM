@@ -163,9 +163,10 @@ interface WanAndroidApi {
     @GET("user/lg/private_articles/{page}/json")
     suspend fun getMyArticle(@Path("page") page: Int): BaseApiResponse<ShareInfo>
 
+    @FormUrlEncoded
     @POST("lg/user_article/add/json")
     suspend fun uploadArticle(
         @Field("title") title: String,
         @Field("link") content: String
-    ): BaseApiResponse<Any?>
+    ): BaseApiResponse<String>
 }

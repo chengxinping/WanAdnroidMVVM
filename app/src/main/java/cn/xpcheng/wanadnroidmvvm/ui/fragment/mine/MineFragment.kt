@@ -136,5 +136,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         fun goToTodo() {
 
         }
+
+        fun goToMyHistory() {}
     }
 }

@@ -5,7 +5,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import cn.xpcheng.wanadnroidmvvm.R
-import cn.xpcheng.wanadnroidmvvm.navigation.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment
 import cn.xpcheng.wanadnroidmvvm.utils.CacheUtil
 
 /**
